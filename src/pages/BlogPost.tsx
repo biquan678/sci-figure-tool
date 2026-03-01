@@ -9,8 +9,14 @@ export default function BlogPost() {
   const content = slug ? articleContent[slug] : undefined;
 
   useEffect(() => {
-    if (post) document.title = `${post.title} — SCI Pub Tools`;
-    return () => { document.title = 'SCI Pub Tools — Free Figure Checker & Image Converter'; };
+    if (post) {
+      document.title = `${post.title} — SCI Pub Tools`;
+      let meta = document.querySelector('meta[name="description"]') as HTMLMetaElement;
+      if (meta) meta.content = post.excerpt;
+    }
+    return () => {
+      document.title = 'SCI Pub Tools — Free Figure Checker & Image Converter for Journal Submission';
+    };
   }, [post]);
 
   if (!post || !content) {
@@ -22,9 +28,21 @@ export default function BlogPost() {
     );
   }
 
+  const articleSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: post.title,
+    description: post.excerpt,
+    datePublished: post.date,
+    author: { '@type': 'Organization', name: 'SCI Pub Tools' },
+    publisher: { '@type': 'Organization', name: 'SCI Pub Tools', url: 'https://scipubtools.com' },
+    mainEntityOfPage: `https://scipubtools.com/blog/${post.slug}`,
+  };
+
   return (
     <article className="max-w-3xl mx-auto px-4 py-8">
-      <Link to="/" className="text-sm text-blue-600 hover:underline mb-4 inline-block">← Back</Link>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
+      <Link to="/blog" className="text-sm text-blue-600 hover:underline mb-4 inline-block">← Back</Link>
       <div className="flex flex-wrap gap-1 mb-3">
         {post.tags.map(tag => (
           <span key={tag} className="text-xs px-2 py-0.5 bg-blue-50 text-blue-600 rounded-full">{tag}</span>
@@ -38,12 +56,9 @@ export default function BlogPost() {
   );
 }
 
-// Simple markdown to HTML (no external dependency)
 function markdownToHtml(md: string): string {
   let html = md
-    // Code blocks
     .replace(/```(\w*)\n([\s\S]*?)```/g, '<pre class="bg-gray-50 rounded-lg p-4 overflow-x-auto text-sm"><code>$2</code></pre>')
-    // Tables
     .replace(/\|(.+)\|\n\|[-| :]+\|\n((?:\|.+\|\n?)*)/g, (_match, header: string, body: string) => {
       const ths = header.split('|').filter((c: string) => c.trim()).map((c: string) => `<th class="px-3 py-2 text-left text-sm font-medium text-gray-700 bg-gray-50">${c.trim()}</th>`).join('');
       const rows = body.trim().split('\n').map((row: string) => {
@@ -52,26 +67,16 @@ function markdownToHtml(md: string): string {
       }).join('');
       return `<table class="w-full border border-gray-200 rounded-lg overflow-hidden mb-4"><thead><tr>${ths}</tr></thead><tbody>${rows}</tbody></table>`;
     })
-    // Headers
     .replace(/^### (.+)$/gm, '<h3 class="text-lg font-semibold text-gray-900 mt-6 mb-2">$1</h3>')
     .replace(/^## (.+)$/gm, '<h2 class="text-xl font-bold text-gray-900 mt-8 mb-3">$1</h2>')
-    // Bold
     .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-    // Inline code
     .replace(/`([^`]+)`/g, '<code class="bg-gray-100 px-1 rounded text-sm">$1</code>')
-    // Links
     .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="text-blue-600 hover:underline">$1</a>')
-    // Checklist
     .replace(/^- \[ \] (.+)$/gm, '<div class="flex items-center gap-2 my-1"><input type="checkbox" disabled class="rounded"><span class="text-sm">$1</span></div>')
     .replace(/^- \[x\] (.+)$/gm, '<div class="flex items-center gap-2 my-1"><input type="checkbox" checked disabled class="rounded"><span class="text-sm line-through text-gray-400">$1</span></div>')
-    // Unordered lists
     .replace(/^- (.+)$/gm, '<li class="ml-4 text-sm text-gray-700">$1</li>')
-    // Ordered lists
     .replace(/^\d+\. (.+)$/gm, '<li class="ml-4 text-sm text-gray-700 list-decimal">$1</li>')
-    // Paragraphs
     .replace(/\n\n/g, '</p><p class="text-gray-700 leading-relaxed mb-4">')
-    // Line breaks
     .replace(/\n/g, '<br/>');
-
   return `<p class="text-gray-700 leading-relaxed mb-4">${html}</p>`;
 }
