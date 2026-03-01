@@ -21,6 +21,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     { path: '/', label: t('nav.home') },
     { path: '/figure-checker', label: t('nav.checker') },
     { path: '/image-converter', label: t('nav.converter') },
+    { path: '/blog', label: t('nav.blog') },
   ];
 
   return (

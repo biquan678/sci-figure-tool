@@ -4,6 +4,7 @@ import Layout from './components/Layout';
 import Home from './pages/Home';
 import FigureChecker from './pages/FigureChecker';
 import Converter from './pages/Converter';
+import BlogList from './pages/BlogList';
 import BlogPost from './pages/BlogPost';
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/figure-checker" element={<FigureChecker />} />
           <Route path="/image-converter" element={<Converter />} />
+          <Route path="/blog" element={<BlogList />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
         </Routes>
       </Layout>
