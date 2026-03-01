@@ -37,7 +37,7 @@ export default function Home() {
           <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">{t('nav.blog')}</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredPosts.map(post => (
-              <article key={post.slug} className="bg-white rounded-lg border border-gray-200 p-5 hover:shadow-md transition-shadow">
+              <Link to={`/blog/${post.slug}`} key={post.slug} className="block bg-white rounded-lg border border-gray-200 p-5 hover:shadow-md transition-shadow">
                 <div className="flex flex-wrap gap-1 mb-2">
                   {post.tags.slice(0, 3).map(tag => (
                     <span key={tag} className="text-xs px-2 py-0.5 bg-blue-50 text-blue-600 rounded-full">{tag}</span>
@@ -46,7 +46,7 @@ export default function Home() {
                 <h3 className="font-semibold text-gray-900 text-sm leading-snug mb-2">{post.title}</h3>
                 <p className="text-xs text-gray-500 line-clamp-3">{post.excerpt}</p>
                 <time className="block text-xs text-gray-400 mt-3">{post.date}</time>
-              </article>
+              </Link>
             ))}
           </div>
         </section>
