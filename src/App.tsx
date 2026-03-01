@@ -136,25 +136,24 @@ function App() {
 
           {/* 分类网格 - 一排3个 */}
           {!searchQuery.trim() && !expandedCat && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+            <div className="grid grid-cols-3 gap-2 sm:gap-3">
               {categories.map(cat => {
                 const meta = catMeta[cat] || { icon: '📄', desc: '' };
                 const count = journalsByCategory[cat]?.length || 0;
                 const hasSelected = selectedJournal && journalsByCategory[cat]?.some(j => j.name === selectedJournal.name);
                 return (
                   <button key={cat} onClick={() => setExpandedCat(cat)}
-                    className={`flex items-start gap-3 p-4 rounded-lg border transition-all text-left hover:shadow-sm ${
+                    className={`flex flex-col items-center gap-2 p-3 sm:p-4 rounded-lg border transition-all text-center hover:shadow-sm ${
                       hasSelected ? 'border-blue-300 bg-blue-50' : 'border-gray-200 bg-white hover:border-gray-300'
                     }`}>
-                    <span className="text-2xl mt-0.5">{meta.icon}</span>
-                    <div className="min-w-0">
-                      <div className="font-medium text-gray-800 text-sm flex items-center gap-2">
+                    <span className="text-xl sm:text-2xl">{meta.icon}</span>
+                    <div className="min-w-0 w-full">
+                      <div className="font-medium text-gray-800 text-xs sm:text-sm truncate">
                         {cat}
-                        <span className="text-xs text-gray-400 font-normal">{count}个</span>
                       </div>
-                      <div className="text-xs text-gray-400 mt-0.5 truncate">{meta.desc}</div>
+                      <div className="text-xs text-gray-400 mt-0.5">{count}个</div>
                       {hasSelected && (
-                        <div className="text-xs text-blue-600 mt-1">✓ {selectedJournal?.name}</div>
+                        <div className="text-xs text-blue-600 mt-1 truncate">✓</div>
                       )}
                     </div>
                   </button>
