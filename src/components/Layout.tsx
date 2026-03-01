@@ -74,6 +74,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <div className="max-w-6xl mx-auto px-4 py-6 text-center text-sm text-gray-400">
           <p>{t('site.title')} — {t('footer.desc')} · {t('site.journals_count', { count: journals.length })}</p>
           <p className="mt-1">{t('footer.privacy')}</p>
+          <div className="mt-2 flex justify-center gap-4 text-xs">
+            <Link to="/privacy" className="hover:text-gray-600 transition-colors">Privacy Policy</Link>
+            <Link to="/terms" className="hover:text-gray-600 transition-colors">Terms of Service</Link>
+          </div>
         </div>
       </footer>
     </div>

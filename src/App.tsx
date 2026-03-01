@@ -6,6 +6,8 @@ import FigureChecker from './pages/FigureChecker';
 import Converter from './pages/Converter';
 import BlogList from './pages/BlogList';
 import BlogPost from './pages/BlogPost';
+import Privacy from './pages/Privacy';
+import Terms from './pages/Terms';
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
           <Route path="/image-converter" element={<Converter />} />
           <Route path="/blog" element={<BlogList />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/terms" element={<Terms />} />
         </Routes>
       </Layout>
     </BrowserRouter>
