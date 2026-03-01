@@ -1,0 +1,38 @@
+const fs = require('fs');
+
+// Generate a 350x120 banner as PPM then convert concept to SVG
+const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="350" height="120" viewBox="0 0 350 120">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e40af"/>
+      <stop offset="100%" style="stop-color:#3b82f6"/>
+    </linearGradient>
+  </defs>
+  <rect width="350" height="120" rx="12" fill="url(#bg)"/>
+  
+  <!-- Left icon area -->
+  <circle cx="45" cy="48" r="22" fill="rgba(255,255,255,0.15)"/>
+  <text x="45" y="55" text-anchor="middle" font-size="24">🔬</text>
+  
+  <!-- Main title -->
+  <text x="80" y="38" font-family="Arial,Helvetica,sans-serif" font-weight="bold" font-size="20" fill="white">SCI Pub Tools</text>
+  
+  <!-- Subtitle -->
+  <text x="80" y="56" font-family="Arial,Helvetica,sans-serif" font-size="11" fill="rgba(255,255,255,0.85)">Free Figure Checker &amp; Format Converter</text>
+  
+  <!-- Features -->
+  <text x="80" y="76" font-family="Arial,Helvetica,sans-serif" font-size="9.5" fill="rgba(255,255,255,0.7)">✓ 60+ Journals  ✓ DPI/Size Check  ✓ TIFF/PNG/PDF Convert</text>
+  
+  <!-- CTA button -->
+  <rect x="80" y="86" width="120" height="26" rx="13" fill="#22c55e"/>
+  <text x="140" y="103" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-weight="bold" font-size="11" fill="white">Try Free Now →</text>
+  
+  <!-- Privacy badge -->
+  <text x="215" y="103" font-family="Arial,Helvetica,sans-serif" font-size="8.5" fill="rgba(255,255,255,0.6)">🔒 100% Browser-based</text>
+  
+  <!-- Domain -->
+  <text x="310" y="113" text-anchor="end" font-family="Arial,Helvetica,sans-serif" font-size="9" fill="rgba(255,255,255,0.5)">scipubtools.com</text>
+</svg>`;
+
+fs.writeFileSync('C:\\Users\\laosu-2\\.openclaw\\workspace\\sci-figure-tool\\public\\banner-350x120.svg', svg);
+console.log('Banner SVG generated');

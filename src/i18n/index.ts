@@ -51,6 +51,7 @@ const resources = {
         tiff_note: 'TIFF files are generated with LZW compression, compatible with Photoshop, ImageJ, GIMP and other software.',
       },
       footer: { desc: 'Free online tools for scientific publication', privacy: 'All images processed locally in your browser — never uploaded to any server.' },
+      bookmark: { title: 'Bookmark this tool for your next submission!', desktop: 'Press {{shortcut}} to bookmark', mobile: 'Tap Share → Add to Home Screen' },
       categories: { '综合顶刊': 'Top Journals', '医学': 'Medicine', '生物': 'Biology', '化学': 'Chemistry', '材料/物理': 'Materials/Physics', '工程/计算机': 'Engineering/CS', '出版商通用': 'Publishers', '开放获取': 'Open Access', '国内期刊': 'Chinese Journals' },
     }
   },
@@ -103,6 +104,7 @@ const resources = {
         tiff_note: 'TIFF 文件使用 LZW 压缩生成，兼容 Photoshop、ImageJ、GIMP 等软件。',
       },
       footer: { desc: '免费在线科研发表工具', privacy: '所有图片在浏览器本地处理，不上传服务器，保护您的数据隐私。' },
+      bookmark: { title: '收藏本站，下次投稿随时用！', desktop: '按 {{shortcut}} 即可收藏', mobile: '点击分享 → 添加到主屏幕' },
       categories: { '综合顶刊': '综合顶刊', '医学': '医学', '生物': '生物', '化学': '化学', '材料/物理': '材料/物理', '工程/计算机': '工程/计算机', '出版商通用': '出版商通用', '开放获取': '开放获取', '国内期刊': '国内期刊' },
     }
   },
@@ -155,6 +157,7 @@ const resources = {
         tiff_note: 'TIFFファイルはLZW圧縮で生成され、Photoshop、ImageJ、GIMPなどと互換性があります。',
       },
       footer: { desc: '科学論文投稿のための無料ツール', privacy: 'すべての画像はブラウザ上で処理されます。' },
+      bookmark: { title: 'ブックマークして次の投稿に備えましょう！', desktop: '{{shortcut}} でブックマーク', mobile: '共有 → ホーム画面に追加' },
       categories: { '综合顶刊': 'トップジャーナル', '医学': '医学', '生物': '生物学', '化学': '化学', '材料/物理': '材料/物理', '工程/计算机': '工学/CS', '出版商通用': '出版社共通', '开放获取': 'オープンアクセス', '国内期刊': '中国ジャーナル' },
     }
   }

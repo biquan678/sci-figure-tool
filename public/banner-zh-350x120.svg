@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="350" height="120" viewBox="0 0 350 120">
+  <!-- 白底+浅灰边框，匹配网站风格 -->
+  <rect width="350" height="120" rx="10" fill="white" stroke="#e5e7eb" stroke-width="1"/>
+  
+  <!-- 左侧蓝色装饰条 -->
+  <rect x="0" y="0" width="5" height="120" rx="2" fill="#2563eb"/>
+
+  <!-- 标题 -->
+  <text x="20" y="28" font-family="Arial,Helvetica,sans-serif" font-weight="bold" font-size="17" fill="#111827">📐 SCI Pub Tools</text>
+  <text x="168" y="28" font-family="Arial,Helvetica,sans-serif" font-size="10" fill="#9ca3af">scipubtools.com</text>
+
+  <!-- 分隔线 -->
+  <line x1="20" y1="36" x2="330" y2="36" stroke="#f3f4f6" stroke-width="1"/>
+
+  <!-- 功能卡片1：期刊查询 -->
+  <rect x="20" y="44" width="150" height="50" rx="8" fill="#eff6ff" stroke="#bfdbfe" stroke-width="0.5"/>
+  <text x="34" y="63" font-size="16">🔍</text>
+  <text x="54" y="62" font-family="Arial,Helvetica,sans-serif" font-weight="bold" font-size="11" fill="#1e40af">期刊要求查询</text>
+  <text x="54" y="78" font-family="Arial,Helvetica,sans-serif" font-size="9" fill="#6b7280">60+ 期刊 · DPI · 尺寸 · 色彩</text>
+
+  <!-- 功能卡片2：格式转换 -->
+  <rect x="180" y="44" width="150" height="50" rx="8" fill="#eff6ff" stroke="#bfdbfe" stroke-width="0.5"/>
+  <text x="194" y="63" font-size="16">🔄</text>
+  <text x="214" y="62" font-family="Arial,Helvetica,sans-serif" font-weight="bold" font-size="11" fill="#1e40af">格式转换</text>
+  <text x="214" y="78" font-family="Arial,Helvetica,sans-serif" font-size="9" fill="#6b7280">JPG/PNG ↔ TIFF/PDF</text>
+
+  <!-- 底部 -->
+  <text x="20" y="110" font-family="Arial,Helvetica,sans-serif" font-size="9" fill="#9ca3af">🔒 浏览器本地处理 · 无需上传 · 完全免费</text>
+  <rect x="270" y="98" width="62" height="20" rx="10" fill="#2563eb"/>
+  <text x="301" y="112" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-weight="bold" font-size="9.5" fill="white">立即使用</text>
+</svg>

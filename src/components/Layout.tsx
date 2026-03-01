@@ -1,6 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { journals } from '../data/journals';
+import BookmarkHint from './BookmarkHint';
 
 const langs = [
   { code: 'en', label: 'EN' },
@@ -67,6 +68,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       </header>
 
       <main className="flex-1">{children}</main>
+      <BookmarkHint />
 
       <footer className="bg-white border-t border-gray-200 mt-auto">
         <div className="max-w-6xl mx-auto px-4 py-6 text-center text-sm text-gray-400">
