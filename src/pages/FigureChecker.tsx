@@ -51,7 +51,7 @@ export default function FigureChecker() {
   };
 
   const passCount = checkResults.filter(r => r.pass).length;
-  const catIcons: Record<string, string> = { '综合顶刊': '🏆', '医学': '🏥', '生物': '🧬', '化学': '⚗️', '材料/物理': '🔬', '工程/计算机': '💻', '出版商通用': '📚', '开放获取': '🔓', '国内期刊': '🇨🇳' };
+  const catIcons: Record<string, string> = { '综合顶刊': '🏆', '医学': '🏥', '生物': '🧬', '化学': '⚗️', '材料/物理': '🔬', '工程/计算机': '💻', '出版商通用': '📚', '开放获取': '🔓', '国内期刊': '🇨🇳', '环境/地球': '🌍', '社会科学': '📊', '农业/食品': '🌾', '药学/临床': '💊' };
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-6 space-y-6">
