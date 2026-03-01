@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import { journals, categories } from './data/journals';
 import type { JournalRequirement } from './data/journals';
 import { loadImage, checkImage, convertImage, formatSize } from './lib/image-utils';
@@ -6,8 +6,8 @@ import type { ImageInfo, CheckResult } from './lib/image-utils';
 
 function App() {
   const [selectedJournal, setSelectedJournal] = useState<JournalRequirement | null>(null);
-  const [categoryFilter, setCategoryFilter] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
+  const [expandedCat, setExpandedCat] = useState<string | null>(null);
   const [imageInfo, setImageInfo] = useState<ImageInfo | null>(null);
   const [checkResults, setCheckResults] = useState<CheckResult[]>([]);
   const [converting, setConverting] = useState(false);
@@ -15,11 +15,26 @@ function App() {
   const [outputFormat, setOutputFormat] = useState<'png' | 'jpeg'>('png');
   const [dragOver, setDragOver] = useState(false);
 
-  const filteredJournals = journals.filter(j => {
-    const matchCat = !categoryFilter || j.category === categoryFilter;
-    const matchSearch = !searchQuery || j.name.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchCat && matchSearch;
-  });
+  // 搜索结果
+  const searchResults = useMemo(() => {
+    if (!searchQuery.trim()) return [];
+    const q = searchQuery.toLowerCase();
+    return journals.filter(j =>
+      j.name.toLowerCase().includes(q) ||
+      j.category.toLowerCase().includes(q) ||
+      j.notes.toLowerCase().includes(q)
+    ).slice(0, 12);
+  }, [searchQuery]);
+
+  // 按分类分组
+  const journalsByCategory = useMemo(() => {
+    const map: Record<string, JournalRequirement[]> = {};
+    for (const j of journals) {
+      if (!map[j.category]) map[j.category] = [];
+      map[j.category].push(j);
+    }
+    return map;
+  }, []);
 
   const handleFile = useCallback(async (file: File) => {
     if (!file.type.startsWith('image/')) { alert('请上传图片文件'); return; }
@@ -32,6 +47,7 @@ function App() {
 
   const handleJournalSelect = (j: JournalRequirement) => {
     setSelectedJournal(j);
+    setSearchQuery('');
     if (imageInfo) setCheckResults(checkImage(imageInfo, j));
   };
 
@@ -52,6 +68,12 @@ function App() {
 
   const passCount = checkResults.filter(r => r.pass).length;
 
+  const catIcons: Record<string, string> = {
+    '综合顶刊': '🏆', '医学': '🏥', '生物': '🧬', '化学': '⚗️',
+    '材料/物理': '🔬', '工程/计算机': '💻', '出版商通用': '📚',
+    '开放获取': '🔓', '国内期刊': '🇨🇳',
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       <header className="bg-white border-b border-gray-200">
@@ -69,23 +91,88 @@ function App() {
             <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-blue-600 text-white text-xs font-bold mr-2">1</span>
             选择目标期刊
           </h2>
-          <div className="flex gap-3 mb-3 flex-col sm:flex-row">
-            <input type="text" placeholder="搜索期刊名称..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)}
-              className="flex-1 px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
-            <select value={categoryFilter} onChange={e => setCategoryFilter(e.target.value)}
-              className="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-              <option value="">全部分类</option>
-              {categories.map(c => <option key={c} value={c}>{c}</option>)}
-            </select>
+
+          {/* 搜索框 */}
+          <div className="relative mb-4">
+            <input type="text" placeholder="输入期刊名称搜索，如 Nature、中华医学、Lancet..."
+              value={searchQuery} onChange={e => setSearchQuery(e.target.value)}
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+            {searchQuery && (
+              <button onClick={() => setSearchQuery('')}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 text-lg">×</button>
+            )}
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2">
-            {filteredJournals.map(j => (
-              <button key={j.name} onClick={() => handleJournalSelect(j)}
-                className={`px-3 py-2 text-sm rounded-md border transition-colors text-left ${selectedJournal?.name === j.name ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-700 border-gray-200 hover:border-blue-400 hover:bg-blue-50'}`}>
-                {j.name}
-              </button>
-            ))}
-          </div>
+
+          {/* 搜索结果 */}
+          {searchQuery.trim() && (
+            <div className="mb-4">
+              {searchResults.length > 0 ? (
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
+                  {searchResults.map(j => (
+                    <button key={j.name} onClick={() => handleJournalSelect(j)}
+                      className={`px-3 py-2.5 text-sm rounded-lg border transition-all text-left ${
+                        selectedJournal?.name === j.name
+                          ? 'bg-blue-600 text-white border-blue-600 shadow-sm'
+                          : 'bg-white text-gray-700 border-gray-200 hover:border-blue-400 hover:bg-blue-50'
+                      }`}>
+                      <div className="font-medium">{j.name}</div>
+                      <div className={`text-xs mt-0.5 ${selectedJournal?.name === j.name ? 'text-blue-100' : 'text-gray-400'}`}>{j.category}</div>
+                    </button>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-sm text-gray-400 text-center py-4">未找到匹配的期刊</p>
+              )}
+            </div>
+          )}
+
+          {/* 分类折叠列表 */}
+          {!searchQuery.trim() && (
+            <div className="space-y-2">
+              {categories.map(cat => (
+                <div key={cat} className="border border-gray-200 rounded-lg overflow-hidden">
+                  <button onClick={() => setExpandedCat(expandedCat === cat ? null : cat)}
+                    className="w-full flex items-center justify-between px-4 py-3 bg-gray-50 hover:bg-gray-100 transition-colors text-left">
+                    <div className="flex items-center gap-2">
+                      <span>{catIcons[cat] || '📄'}</span>
+                      <span className="font-medium text-gray-800 text-sm">{cat}</span>
+                      <span className="text-xs text-gray-400">({journalsByCategory[cat]?.length || 0})</span>
+                    </div>
+                    <svg className={`w-4 h-4 text-gray-400 transition-transform ${expandedCat === cat ? 'rotate-180' : ''}`}
+                      fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </button>
+                  {expandedCat === cat && (
+                    <div className="p-3 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 bg-white">
+                      {journalsByCategory[cat]?.map(j => (
+                        <button key={j.name} onClick={() => handleJournalSelect(j)}
+                          className={`px-3 py-2 text-sm rounded-md border transition-all text-left ${
+                            selectedJournal?.name === j.name
+                              ? 'bg-blue-600 text-white border-blue-600 shadow-sm'
+                              : 'bg-white text-gray-700 border-gray-200 hover:border-blue-400 hover:bg-blue-50'
+                          }`}>
+                          {j.name}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* 已选期刊标签 */}
+          {selectedJournal && !searchQuery.trim() && (
+            <div className="mt-3 flex items-center gap-2 text-sm">
+              <span className="text-gray-500">已选：</span>
+              <span className="inline-flex items-center gap-1 px-3 py-1 bg-blue-100 text-blue-700 rounded-full font-medium">
+                {selectedJournal.name}
+                <button onClick={() => { setSelectedJournal(null); setCheckResults([]); }}
+                  className="ml-1 text-blue-400 hover:text-blue-600">×</button>
+              </span>
+            </div>
+          )}
         </section>
 
         {/* 期刊要求详情 */}
