@@ -15,7 +15,7 @@ export default function BlogPost() {
       if (meta) meta.content = post.excerpt;
     }
     return () => {
-      document.title = 'SCI Pub Tools — Free Figure Checker & Image Converter for Journal Submission';
+      document.title = 'SciPubTools — Journal Figure Checker & Converter';
     };
   }, [post]);
 

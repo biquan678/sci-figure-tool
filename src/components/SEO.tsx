@@ -13,7 +13,7 @@ export default function SEO({ title, description }: SEOProps) {
       if (meta) meta.content = description;
     }
     return () => {
-      document.title = 'SCI Pub Tools — Free Figure Checker & Image Converter for Journal Submission';
+      document.title = 'SciPubTools — Journal Figure Checker & Converter';
     };
   }, [title, description]);
   return null;

@@ -10,7 +10,7 @@ export default function BlogList() {
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
-      <SEO title="Blog — Scientific Figure Tips & Guides | SCI Pub Tools" description="Guides, tips and best practices for scientific figure preparation, journal submission, DPI requirements, and image format conversion." />
+      <SEO title="Blog — Scientific Figure Tips & Guides | SciPubTools" description="Guides, tips and best practices for scientific figure preparation, journal submission, DPI requirements, and image format conversion." />
       <h1 className="text-2xl font-bold text-gray-900 mb-2">{t('nav.blog')}</h1>
       <p className="text-sm text-gray-500 mb-8">{t('blog.subtitle')}</p>
       <div className="space-y-4">
