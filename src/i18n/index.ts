@@ -53,6 +53,25 @@ const resources = {
       footer: { desc: 'Free online tools for scientific publication', privacy: 'All images processed locally in your browser — never uploaded to any server.' },
       bookmark: { title: 'Bookmark this tool for your next submission!', desktop: 'Press {{shortcut}} to bookmark', mobile: 'Tap Share → Add to Home Screen' },
       categories: { '综合顶刊': 'Top Journals', '医学': 'Medicine', '生物': 'Biology', '化学': 'Chemistry', '材料/物理': 'Materials/Physics', '工程/计算机': 'Engineering/CS', '出版商通用': 'Publishers', '开放获取': 'Open Access', '国内期刊': 'Chinese Journals', '环境/地球': 'Environment/Earth', '社会科学': 'Social Sciences', '农业/食品': 'Agriculture/Food', '药学/临床': 'Pharma/Clinical' },
+      journals: {
+        title: 'Journal Figure Requirements',
+        subtitle: 'Quick links to common journal figure guidelines and templates.',
+        card_desc: 'Open template & sizing guide',
+      },
+      journal: {
+        title: '{{name}} Figure Requirements',
+        dpi: 'Recommended DPI',
+        width: 'Common widths',
+        notes: 'Notes',
+        template_title: 'One‑click template',
+        template_desc: 'Open a pre‑configured canvas and export at journal‑ready size.',
+        open_template: 'Open Template',
+        nature_notes: 'Preferred formats: TIFF, EPS, PDF. Avoid JPG compression.',
+        cell_notes: 'Vector preferred for line art; use embedded fonts.',
+        science_notes: 'Panels labeled A, B, C. Avoid embedded raster text.',
+        elsevier_notes: 'Color figures in RGB; 300 dpi for photos.',
+        acs_notes: 'Line art 600–1200 dpi; photo 300 dpi.',
+      },
     }
   },
   zh: {
@@ -106,6 +125,25 @@ const resources = {
       footer: { desc: '免费在线科研发表工具', privacy: '所有图片在浏览器本地处理，不上传服务器，保护您的数据隐私。' },
       bookmark: { title: '收藏本站，下次投稿随时用！', desktop: '按 {{shortcut}} 即可收藏', mobile: '点击分享 → 添加到主屏幕' },
       categories: { '综合顶刊': '综合顶刊', '医学': '医学', '生物': '生物', '化学': '化学', '材料/物理': '材料/物理', '工程/计算机': '工程/计算机', '出版商通用': '出版商通用', '开放获取': '开放获取', '国内期刊': '国内期刊', '环境/地球': '环境/地球', '社会科学': '社会科学', '农业/食品': '农业/食品', '药学/临床': '药学/临床' },
+      journals: {
+        title: '期刊图片规范',
+        subtitle: '常见期刊图片要求与模板入口。',
+        card_desc: '打开模板与尺寸指南',
+      },
+      journal: {
+        title: '{{name}} 图片要求',
+        dpi: '推荐 DPI',
+        width: '常用宽度',
+        notes: '备注',
+        template_title: '一键模板',
+        template_desc: '打开预设画布并按期刊尺寸导出。',
+        open_template: '打开模板',
+        nature_notes: '建议格式：TIFF/EPS/PDF，避免 JPG 压缩。',
+        cell_notes: '线稿优先用矢量，字体需嵌入。',
+        science_notes: '面板标注 A/B/C，避免栅格文字。',
+        elsevier_notes: '彩色图用 RGB；照片 300 dpi。',
+        acs_notes: '线稿 600–1200 dpi；照片 300 dpi。',
+      },
     }
   },
   ja: {
@@ -159,6 +197,25 @@ const resources = {
       footer: { desc: '科学論文投稿のための無料ツール', privacy: 'すべての画像はブラウザ上で処理されます。' },
       bookmark: { title: 'ブックマークして次の投稿に備えましょう！', desktop: '{{shortcut}} でブックマーク', mobile: '共有 → ホーム画面に追加' },
       categories: { '综合顶刊': 'トップジャーナル', '医学': '医学', '生物': '生物学', '化学': '化学', '材料/物理': '材料/物理', '工程/计算机': '工学/CS', '出版商通用': '出版社共通', '开放获取': 'オープンアクセス', '国内期刊': '中国ジャーナル', '环境/地球': '環境/地球', '社会科学': '社会科学', '农业/食品': '農業/食品', '药学/临床': '薬学/臨床' },
+      journals: {
+        title: 'ジャーナル図規定',
+        subtitle: '主要ジャーナルの図要件とテンプレートへの入口。',
+        card_desc: 'テンプレートとサイズガイドを開く',
+      },
+      journal: {
+        title: '{{name}} 図要件',
+        dpi: '推奨DPI',
+        width: '一般的な幅',
+        notes: '備考',
+        template_title: 'ワンクリックテンプレート',
+        template_desc: 'プリセットキャンバスを開き、ジャーナル規定サイズで書き出し。',
+        open_template: 'テンプレートを開く',
+        nature_notes: '推奨形式：TIFF/EPS/PDF。JPG圧縮は避ける。',
+        cell_notes: '線画はベクター推奨、フォント埋め込み。',
+        science_notes: 'パネルはA/B/C表記、ラスタ文字を避ける。',
+        elsevier_notes: 'カラーはRGB、写真は300dpi。',
+        acs_notes: '線画600–1200dpi、写真300dpi。',
+      },
     }
   }
 };

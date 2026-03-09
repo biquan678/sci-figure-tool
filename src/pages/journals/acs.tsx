@@ -1,16 +1,19 @@
+import { useTranslation } from 'react-i18next';
+
 export default function JournalPage(){
+  const { t } = useTranslation();
   return (
     <div className="max-w-4xl mx-auto px-6 py-12">
-      <h1 className="text-3xl font-bold">ACS Figure Requirements</h1>
+      <h1 className="text-3xl font-bold">{t('journal.title', { name: 'ACS' })}</h1>
       <div className="mt-4 text-gray-700">
-        <div><b>Recommended DPI:</b> 300</div>
-        <div><b>Common widths:</b> 87 mm / 178 mm</div>
-        <div className="mt-3"><b>Notes:</b> Line art 600?1200 dpi; photo 300 dpi.</div>
+        <div><b>{t('journal.dpi')}:</b> 300</div>
+        <div><b>{t('journal.width')}:</b> 87 mm / 178 mm</div>
+        <div className="mt-3"><b>{t('journal.notes')}:</b> {t('journal.acs_notes')}</div>
       </div>
       <div className="mt-6 p-4 rounded-xl border">
-        <div className="font-semibold">One?click template</div>
-        <div className="text-sm text-gray-600">Open a pre?configured canvas and export at journal?ready size.</div>
-        <button className="mt-3 px-4 py-2 rounded-lg bg-black text-white">Open Template</button>
+        <div className="font-semibold">{t('journal.template_title')}</div>
+        <div className="text-sm text-gray-600">{t('journal.template_desc')}</div>
+        <button className="mt-3 px-4 py-2 rounded-lg bg-black text-white">{t('journal.open_template')}</button>
       </div>
     </div>
   );

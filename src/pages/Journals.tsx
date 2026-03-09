@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const journals = [
   { name: 'Nature', slug: 'nature' },
@@ -10,16 +11,17 @@ const journals = [
 ];
 
 export default function Journals() {
+  const { t } = useTranslation();
   const list = useMemo(() => journals, []);
   return (
     <div className="max-w-5xl mx-auto px-6 py-12">
-      <h1 className="text-3xl font-bold">Journal Figure Requirements</h1>
-      <p className="mt-3 text-gray-600">Quick links to common journal figure guidelines and templates.</p>
+      <h1 className="text-3xl font-bold">{t('journals.title')}</h1>
+      <p className="mt-3 text-gray-600">{t('journals.subtitle')}</p>
       <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {list.map(j => (
           <Link key={j.slug} to={"/journals/" + j.slug} className="p-5 rounded-xl border hover:shadow">
             <div className="text-lg font-semibold">{j.name}</div>
-            <div className="text-sm text-gray-500">Open template & sizing guide</div>
+            <div className="text-sm text-gray-500">{t('journals.card_desc')}</div>
           </Link>
         ))}
       </div>
