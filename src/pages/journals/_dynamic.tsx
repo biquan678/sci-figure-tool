@@ -44,7 +44,19 @@ export default function JournalDynamic(){
 
   return (
     <div className="max-w-4xl mx-auto px-6 py-12">
-      <SEO title={`${journal.name} Figure Requirements`} description={`Figure size, DPI, and format requirements for ${journal.name}.`} />
+      <SEO
+        title={`${journal.name} Figure Requirements`}
+        description={`Figure size, DPI, and format requirements for ${journal.name}.`}
+        schema={{
+          '@context': 'https://schema.org',
+          '@type': 'TechArticle',
+          headline: `${journal.name} Figure Requirements`,
+          description: `Figure size, DPI, and format requirements for ${journal.name}.`,
+          about: 'Scientific figure requirements',
+          inLanguage: 'en',
+          publisher: { '@type': 'Organization', name: 'SciPubTools' }
+        }}
+      />
       <h1 className="text-3xl font-bold">{t('journal.title', { name: journal.name })}</h1>
       <div className="mt-4 text-gray-700">
         <div><b>{t('journal.dpi')}:</b> {dpi}</div>
@@ -83,6 +95,11 @@ export default function JournalDynamic(){
           <div><b>Height:</b> {height} mm ({pxH}px)</div>
           <div><b>DPI:</b> {dpi}</div>
           <div><b>Mode:</b> {mode}</div>
+        </div>
+
+        <div className="mt-4 flex flex-wrap gap-2 text-sm">
+          <a className="text-blue-600 underline" href="/figure-checker">Go to Figure Checker</a>
+          <a className="text-blue-600 underline" href="/image-converter">Go to Format Converter</a>
         </div>
 
         <div className="mt-3 flex flex-wrap gap-2">
