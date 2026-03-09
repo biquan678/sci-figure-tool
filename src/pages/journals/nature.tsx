@@ -47,9 +47,9 @@ export default function JournalPage(){
         </div>
 
         <div className="mt-4 bg-white border rounded-lg p-3">
-          <div className="text-xs text-gray-500 mb-2">Preview (scaled)</div>
-          <div className="overflow-auto">
-            <canvas ref={canvasRef} style={{ maxWidth: '520px', width: '100%', height: 'auto' }} />
+          <div className="text-xs text-gray-500 mb-2">Preview (fit)</div>
+          <div className="overflow-hidden rounded-lg bg-gray-50" style={{ maxWidth: '520px', height: '320px' }}>
+            <canvas ref={canvasRef} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
           </div>
         </div>
 
