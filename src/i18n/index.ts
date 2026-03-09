@@ -5,7 +5,7 @@ const resources = {
   en: {
     translation: {
       site: { title: 'SCI Pub Tools', subtitle: 'Free online tools for scientific publication — Figure checker, format converter & more', journals_count: '{{count}} journals supported' },
-      nav: { home: 'Home', checker: 'Figure Checker', converter: 'Format Converter', blog: 'Blog' },
+      nav: { home: 'Home', journals: 'Journals', checker: 'Figure Checker', converter: 'Format Converter', blog: 'Blog' },
       home: {
         hero: 'Free Tools for Scientific Publication',
         hero_sub: 'Check figure requirements, convert image formats, and prepare publication-ready figures — all in your browser, no upload needed.',
@@ -58,7 +58,7 @@ const resources = {
   zh: {
     translation: {
       site: { title: 'SCI Pub Tools', subtitle: '免费在线科研发表工具 — 图片检查、格式转换等', journals_count: '支持 {{count}} 个期刊' },
-      nav: { home: '首页', checker: '图片检查', converter: '格式转换', blog: '博客' },
+      nav: { home: '首页', journals: '期刊规范', checker: '图片检查', converter: '格式转换', blog: '博客' },
       home: {
         hero: '免费科研发表工具集',
         hero_sub: '检查图片是否符合期刊要求，转换图片格式，准备投稿就绪的论文图片 — 全部在浏览器本地完成，无需上传。',
@@ -111,7 +111,7 @@ const resources = {
   ja: {
     translation: {
       site: { title: 'SCI Pub Tools', subtitle: '科学論文投稿のための無料オンラインツール', journals_count: '{{count}}誌対応' },
-      nav: { home: 'ホーム', checker: '図チェッカー', converter: 'フォーマット変換', blog: 'ブログ' },
+      nav: { home: 'ホーム', journals: 'ジャーナル規定', checker: '図チェッカー', converter: 'フォーマット変換', blog: 'ブログ' },
       home: {
         hero: '科学論文投稿のための無料ツール',
         hero_sub: '図の要件チェック、画像フォーマット変換、投稿用図の準備 — すべてブラウザ上で完結。',

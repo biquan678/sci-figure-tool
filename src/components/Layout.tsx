@@ -20,6 +20,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   const navItems = [
     { path: '/', label: t('nav.home') },
+    { path: '/journals', label: t('nav.journals') },
     { path: '/figure-checker', label: t('nav.checker') },
     { path: '/image-converter', label: t('nav.converter') },
     { path: '/blog', label: t('nav.blog') },
