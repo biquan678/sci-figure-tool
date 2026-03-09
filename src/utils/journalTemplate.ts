@@ -38,21 +38,21 @@ function drawPanels(ctx: CanvasRenderingContext2D, w: number, h: number) {
   }
 }
 
-export function downloadTemplate(opts: {
+export function renderTemplate(opts: {
   name: string;
   widthMm: number;
   heightMm: number;
   dpi: number;
   label: string;
+  target: HTMLCanvasElement;
 }) {
-  const { name, widthMm, heightMm, dpi, label } = opts;
+  const { name, widthMm, heightMm, dpi, label, target } = opts;
   const widthPx = mmToPx(widthMm, dpi);
   const heightPx = mmToPx(heightMm, dpi);
 
-  const canvas = document.createElement('canvas');
-  canvas.width = widthPx;
-  canvas.height = heightPx;
-  const ctx = canvas.getContext('2d');
+  target.width = widthPx;
+  target.height = heightPx;
+  const ctx = target.getContext('2d');
   if (!ctx) return;
 
   // background
@@ -72,8 +72,21 @@ export function downloadTemplate(opts: {
   ctx.fillStyle = '#9ca3af';
   ctx.font = '16px Arial';
   ctx.fillText(`${name} • ${label} • ${dpi} DPI`, 20, 30);
+}
 
-  const dataUrl = canvas.toDataURL('image/png');
+export function downloadTemplate(opts: {
+  name: string;
+  widthMm: number;
+  heightMm: number;
+  dpi: number;
+  label: string;
+  canvas?: HTMLCanvasElement;
+}) {
+  const { name, widthMm, heightMm, dpi, label, canvas } = opts;
+  const c = canvas || document.createElement('canvas');
+  renderTemplate({ name, widthMm, heightMm, dpi, label, target: c });
+
+  const dataUrl = c.toDataURL('image/png');
   const a = document.createElement('a');
   a.href = dataUrl;
   a.download = `${name.replace(/\s+/g, '_')}_${label}_${dpi}dpi.png`;
