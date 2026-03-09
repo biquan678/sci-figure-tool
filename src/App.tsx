@@ -5,6 +5,7 @@ import JournalCell from './pages/journals/cell';
 import JournalScience from './pages/journals/science';
 import JournalElsevier from './pages/journals/elsevier';
 import JournalAcs from './pages/journals/acs';
+import JournalDynamic from './pages/journals/_dynamic';
 import './i18n';
 import Layout from './components/Layout';
 import Home from './pages/Home';
@@ -27,6 +28,7 @@ function App() {
           <Route path="/journals/science" element={<JournalScience />} />
           <Route path="/journals/elsevier" element={<JournalElsevier />} />
           <Route path="/journals/acs" element={<JournalAcs />} />
+          <Route path="/journals/:slug" element={<JournalDynamic />} />
           <Route path="/figure-checker" element={<FigureChecker />} />
           <Route path="/image-converter" element={<Converter />} />
           <Route path="/blog" element={<BlogList />} />

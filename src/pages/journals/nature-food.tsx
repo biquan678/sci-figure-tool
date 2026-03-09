@@ -6,7 +6,7 @@ import SEO from '../../components/SEO';
 
 export default function JournalPage(){
   const { t } = useTranslation();
-  const j = journals.find(x => x.name === 'Cell');
+  const j = journals.find(x => x.name === 'Nature Food');
   const dpi = j?.minDPI || 300;
   const single = j?.singleColumnWidth || 85;
   const double = j?.doubleColumnWidth || 175;
@@ -22,15 +22,15 @@ export default function JournalPage(){
 
   useEffect(() => {
     if (canvasRef.current) {
-      renderTemplate({ name: 'Cell', widthMm, heightMm: height, dpi, label: mode, target: canvasRef.current });
+      renderTemplate({ name: 'Nature Food', widthMm, heightMm: height, dpi, label: mode, target: canvasRef.current });
     }
     if (open && modalRef.current) {
-      renderTemplate({ name: 'Cell', widthMm, heightMm: height, dpi, label: mode, target: modalRef.current });
+      renderTemplate({ name: 'Nature Food', widthMm, heightMm: height, dpi, label: mode, target: modalRef.current });
     }
   }, [mode, widthMm, height, dpi, open]);
 
   const handleDownload = (label: string, widthMm: number) => {
-    downloadTemplate({ name: 'Cell', widthMm, heightMm: height, dpi, label, canvas: canvasRef.current || undefined });
+    downloadTemplate({ name: 'Nature Food', widthMm, heightMm: height, dpi, label, canvas: canvasRef.current || undefined });
   };
 
   const pxW = mmToPx(widthMm, dpi);
@@ -38,8 +38,8 @@ export default function JournalPage(){
 
   return (
     <div className="max-w-4xl mx-auto px-6 py-12">
-      <SEO title="Cell Figure Requirements" description="Figure size, DPI, and format requirements for Cell." />
-      <h1 className="text-3xl font-bold">{t('journal.title', { name: 'Cell' })}</h1>
+      <SEO title="Nature Food Figure Requirements" description="Figure size, DPI, and format requirements for Nature Food." />
+      <h1 className="text-3xl font-bold">{t('journal.title', { name: 'Nature Food' })}</h1>
       <div className="mt-4 text-gray-700">
         <div><b>{t('journal.dpi')}:</b> {dpi}</div>
         <div><b>{t('journal.width')}:</b> {single} mm / {double} mm</div>

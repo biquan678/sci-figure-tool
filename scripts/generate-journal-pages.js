@@ -1,4 +1,23 @@
-import { useEffect, useRef, useState } from 'react';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const root = path.resolve(__dirname, '..');
+const dataPath = path.join(root, 'src', 'data', 'journals.ts');
+const outDir = path.join(root, 'src', 'pages', 'journals');
+
+const file = fs.readFileSync(dataPath, 'utf8');
+const nameRegex = /\{\s*name:\s*"([^"]+)"/g;
+const names = [];
+let m;
+while ((m = nameRegex.exec(file)) !== null) names.push(m[1]);
+
+const slugify = (name) => name.toLowerCase().replace(/\(.*?\)/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').replace(/--+/g, '-').trim();
+
+if (!fs.existsSync(outDir)) fs.mkdirSync(outDir, { recursive: true });
+
+const pageTemplate = (name) => `import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { journals } from '../../data/journals';
 import { downloadTemplate, renderTemplate, mmToPx } from '../../utils/journalTemplate';
@@ -6,7 +25,7 @@ import SEO from '../../components/SEO';
 
 export default function JournalPage(){
   const { t } = useTranslation();
-  const j = journals.find(x => x.name === 'Cell');
+  const j = journals.find(x => x.name === '${name}');
   const dpi = j?.minDPI || 300;
   const single = j?.singleColumnWidth || 85;
   const double = j?.doubleColumnWidth || 175;
@@ -22,15 +41,15 @@ export default function JournalPage(){
 
   useEffect(() => {
     if (canvasRef.current) {
-      renderTemplate({ name: 'Cell', widthMm, heightMm: height, dpi, label: mode, target: canvasRef.current });
+      renderTemplate({ name: '${name}', widthMm, heightMm: height, dpi, label: mode, target: canvasRef.current });
     }
     if (open && modalRef.current) {
-      renderTemplate({ name: 'Cell', widthMm, heightMm: height, dpi, label: mode, target: modalRef.current });
+      renderTemplate({ name: '${name}', widthMm, heightMm: height, dpi, label: mode, target: modalRef.current });
     }
   }, [mode, widthMm, height, dpi, open]);
 
   const handleDownload = (label: string, widthMm: number) => {
-    downloadTemplate({ name: 'Cell', widthMm, heightMm: height, dpi, label, canvas: canvasRef.current || undefined });
+    downloadTemplate({ name: '${name}', widthMm, heightMm: height, dpi, label, canvas: canvasRef.current || undefined });
   };
 
   const pxW = mmToPx(widthMm, dpi);
@@ -38,8 +57,8 @@ export default function JournalPage(){
 
   return (
     <div className="max-w-4xl mx-auto px-6 py-12">
-      <SEO title="Cell Figure Requirements" description="Figure size, DPI, and format requirements for Cell." />
-      <h1 className="text-3xl font-bold">{t('journal.title', { name: 'Cell' })}</h1>
+      <SEO title="${name} Figure Requirements" description="Figure size, DPI, and format requirements for ${name}." />
+      <h1 className="text-3xl font-bold">{t('journal.title', { name: '${name}' })}</h1>
       <div className="mt-4 text-gray-700">
         <div><b>{t('journal.dpi')}:</b> {dpi}</div>
         <div><b>{t('journal.width')}:</b> {single} mm / {double} mm</div>
@@ -75,7 +94,7 @@ export default function JournalPage(){
           </div>
           <div className="mt-2 overflow-auto rounded-lg bg-gray-50 p-2">
             <div style={{ width: '100%', height: '320px' }}>
-              <canvas ref={canvasRef} style={{ transform: `scale(${zoom})`, transformOrigin: 'top left' }} />
+              <canvas ref={canvasRef} style={{ transform: \`scale(\${zoom})\`, transformOrigin: 'top left' }} />
             </div>
           </div>
         </div>
@@ -109,3 +128,12 @@ export default function JournalPage(){
     </div>
   );
 }
+`;
+
+for (const name of names) {
+  const slug = slugify(name);
+  const out = path.join(outDir, `${slug}.tsx`);
+  fs.writeFileSync(out, pageTemplate(name), 'utf8');
+}
+
+console.log(`generated ${names.length} journal pages`);

@@ -2,13 +2,14 @@ import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { journals } from '../../data/journals';
 import { downloadTemplate, renderTemplate, mmToPx } from '../../utils/journalTemplate';
+import SEO from '../../components/SEO';
 
 export default function JournalPage(){
   const { t } = useTranslation();
   const j = journals.find(x => x.name === 'Science');
   const dpi = j?.minDPI || 300;
   const single = j?.singleColumnWidth || 85;
-  const double = j?.doubleColumnWidth || 174;
+  const double = j?.doubleColumnWidth || 175;
   const height = j?.maxHeight || 230;
 
   const [mode, setMode] = useState<'single' | 'double'>('single');
@@ -37,11 +38,12 @@ export default function JournalPage(){
 
   return (
     <div className="max-w-4xl mx-auto px-6 py-12">
+      <SEO title="Science Figure Requirements" description="Figure size, DPI, and format requirements for Science." />
       <h1 className="text-3xl font-bold">{t('journal.title', { name: 'Science' })}</h1>
       <div className="mt-4 text-gray-700">
         <div><b>{t('journal.dpi')}:</b> {dpi}</div>
         <div><b>{t('journal.width')}:</b> {single} mm / {double} mm</div>
-        <div className="mt-3"><b>{t('journal.notes')}:</b> {t('journal.science_notes')}</div>
+        <div className="mt-3"><b>{t('journal.notes')}:</b> {j?.notes || ''}</div>
       </div>
 
       <div className="mt-6 p-4 rounded-xl border">
@@ -49,10 +51,14 @@ export default function JournalPage(){
         <div className="text-sm text-gray-600">{t('journal.template_desc')}</div>
 
         <div className="mt-3 flex flex-wrap gap-2">
-          <button className={`px-3 py-2 rounded-lg text-sm ${mode === 'single' ? 'bg-blue-700 text-white' : 'bg-gray-100'}`} onClick={() => setMode('single')}>
+          <button className={
+            mode === 'single' ? 'px-3 py-2 rounded-lg text-sm bg-blue-700 text-white' : 'px-3 py-2 rounded-lg text-sm bg-gray-100'
+          } onClick={() => setMode('single')}>
             {t('journal.single_col')}
           </button>
-          <button className={`px-3 py-2 rounded-lg text-sm ${mode === 'double' ? 'bg-blue-700 text-white' : 'bg-gray-100'}`} onClick={() => setMode('double')}>
+          <button className={
+            mode === 'double' ? 'px-3 py-2 rounded-lg text-sm bg-blue-700 text-white' : 'px-3 py-2 rounded-lg text-sm bg-gray-100'
+          } onClick={() => setMode('double')}>
             {t('journal.double_col')}
           </button>
         </div>
@@ -62,7 +68,7 @@ export default function JournalPage(){
             <div className="text-xs text-gray-500">Preview</div>
             <div className="flex gap-2 text-xs">
               {[0.6, 1, 1.5, 2].map(z => (
-                <button key={z} className={`px-2 py-1 rounded ${zoom === z ? 'bg-blue-600 text-white' : 'bg-gray-100'}`} onClick={() => setZoom(z)}>{Math.round(z*100)}%</button>
+                <button key={z} className={zoom === z ? 'px-2 py-1 rounded bg-blue-600 text-white' : 'px-2 py-1 rounded bg-gray-100'} onClick={() => setZoom(z)}>{Math.round(z*100)}%</button>
               ))}
               <button className="px-2 py-1 rounded bg-gray-900 text-white" onClick={() => setOpen(true)}>放大预览</button>
             </div>

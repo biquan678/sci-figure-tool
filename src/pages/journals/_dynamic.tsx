@@ -1,16 +1,22 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { journals } from '../../data/journals';
 import { downloadTemplate, renderTemplate, mmToPx } from '../../utils/journalTemplate';
+import { slugify } from '../../utils/slug';
 import SEO from '../../components/SEO';
 
-export default function JournalPage(){
+export default function JournalDynamic(){
   const { t } = useTranslation();
-  const j = journals.find(x => x.name === 'Cell');
-  const dpi = j?.minDPI || 300;
-  const single = j?.singleColumnWidth || 85;
-  const double = j?.doubleColumnWidth || 175;
-  const height = j?.maxHeight || 230;
+  const { slug } = useParams();
+  const journal = useMemo(() => journals.find(j => slugify(j.name) === slug), [slug]);
+
+  if (!journal) return <div className="max-w-4xl mx-auto px-6 py-12">Not found.</div>;
+
+  const dpi = journal.minDPI || 300;
+  const single = journal.singleColumnWidth || 85;
+  const double = journal.doubleColumnWidth || 175;
+  const height = journal.maxHeight || 230;
 
   const [mode, setMode] = useState<'single' | 'double'>('single');
   const [zoom, setZoom] = useState(0.6);
@@ -22,15 +28,15 @@ export default function JournalPage(){
 
   useEffect(() => {
     if (canvasRef.current) {
-      renderTemplate({ name: 'Cell', widthMm, heightMm: height, dpi, label: mode, target: canvasRef.current });
+      renderTemplate({ name: journal.name, widthMm, heightMm: height, dpi, label: mode, target: canvasRef.current });
     }
     if (open && modalRef.current) {
-      renderTemplate({ name: 'Cell', widthMm, heightMm: height, dpi, label: mode, target: modalRef.current });
+      renderTemplate({ name: journal.name, widthMm, heightMm: height, dpi, label: mode, target: modalRef.current });
     }
-  }, [mode, widthMm, height, dpi, open]);
+  }, [mode, widthMm, height, dpi, open, journal.name]);
 
   const handleDownload = (label: string, widthMm: number) => {
-    downloadTemplate({ name: 'Cell', widthMm, heightMm: height, dpi, label, canvas: canvasRef.current || undefined });
+    downloadTemplate({ name: journal.name, widthMm, heightMm: height, dpi, label, canvas: canvasRef.current || undefined });
   };
 
   const pxW = mmToPx(widthMm, dpi);
@@ -38,12 +44,12 @@ export default function JournalPage(){
 
   return (
     <div className="max-w-4xl mx-auto px-6 py-12">
-      <SEO title="Cell Figure Requirements" description="Figure size, DPI, and format requirements for Cell." />
-      <h1 className="text-3xl font-bold">{t('journal.title', { name: 'Cell' })}</h1>
+      <SEO title={`${journal.name} Figure Requirements`} description={`Figure size, DPI, and format requirements for ${journal.name}.`} />
+      <h1 className="text-3xl font-bold">{t('journal.title', { name: journal.name })}</h1>
       <div className="mt-4 text-gray-700">
         <div><b>{t('journal.dpi')}:</b> {dpi}</div>
         <div><b>{t('journal.width')}:</b> {single} mm / {double} mm</div>
-        <div className="mt-3"><b>{t('journal.notes')}:</b> {j?.notes || ''}</div>
+        <div className="mt-3"><b>{t('journal.notes')}:</b> {journal.notes || ''}</div>
       </div>
 
       <div className="mt-6 p-4 rounded-xl border">
@@ -51,16 +57,8 @@ export default function JournalPage(){
         <div className="text-sm text-gray-600">{t('journal.template_desc')}</div>
 
         <div className="mt-3 flex flex-wrap gap-2">
-          <button className={
-            mode === 'single' ? 'px-3 py-2 rounded-lg text-sm bg-blue-700 text-white' : 'px-3 py-2 rounded-lg text-sm bg-gray-100'
-          } onClick={() => setMode('single')}>
-            {t('journal.single_col')}
-          </button>
-          <button className={
-            mode === 'double' ? 'px-3 py-2 rounded-lg text-sm bg-blue-700 text-white' : 'px-3 py-2 rounded-lg text-sm bg-gray-100'
-          } onClick={() => setMode('double')}>
-            {t('journal.double_col')}
-          </button>
+          <button className={mode === 'single' ? 'px-3 py-2 rounded-lg text-sm bg-blue-700 text-white' : 'px-3 py-2 rounded-lg text-sm bg-gray-100'} onClick={() => setMode('single')}>{t('journal.single_col')}</button>
+          <button className={mode === 'double' ? 'px-3 py-2 rounded-lg text-sm bg-blue-700 text-white' : 'px-3 py-2 rounded-lg text-sm bg-gray-100'} onClick={() => setMode('double')}>{t('journal.double_col')}</button>
         </div>
 
         <div className="mt-4 bg-white border rounded-lg p-3">
