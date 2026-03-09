@@ -49,7 +49,7 @@ export default function JournalPage(){
         <div className="mt-4 bg-white border rounded-lg p-3">
           <div className="text-xs text-gray-500 mb-2">Preview (scaled)</div>
           <div className="overflow-auto">
-            <canvas ref={canvasRef} style={{ maxWidth: '100%' }} />
+            <canvas ref={canvasRef} style={{ maxWidth: '520px', width: '100%', height: 'auto' }} />
           </div>
         </div>
 
