@@ -5,6 +5,7 @@ import type { JournalRequirement } from '../data/journals';
 import { loadImage, checkImage, convertImage, formatSize } from '../lib/image-utils';
 import type { ImageInfo, CheckResult } from '../lib/image-utils';
 import SEO from '../components/SEO';
+import { downloadTemplate } from '../utils/journalTemplate';
 
 export default function FigureChecker() {
   const { t } = useTranslation();
@@ -157,6 +158,26 @@ export default function FigureChecker() {
             <div><span className="text-blue-600 font-medium">{t('checker.min_font')}:</span> {selectedJournal.minFontSize}pt</div>
           </div>
           {selectedJournal.notes && <p className="mt-2 text-sm text-blue-700">💡 {selectedJournal.notes}</p>}
+          <div className="mt-3 flex flex-wrap gap-2">
+            <button className="px-3 py-2 rounded-lg bg-blue-700 text-white text-sm" onClick={() => downloadTemplate({
+              name: selectedJournal.name,
+              widthMm: selectedJournal.singleColumnWidth,
+              heightMm: selectedJournal.maxHeight,
+              dpi: selectedJournal.minDPI,
+              label: 'single'
+            })}>
+              {t('journal.open_template')} • {t('journal.single_col')}
+            </button>
+            <button className="px-3 py-2 rounded-lg bg-blue-600 text-white text-sm" onClick={() => downloadTemplate({
+              name: selectedJournal.name,
+              widthMm: selectedJournal.doubleColumnWidth,
+              heightMm: selectedJournal.maxHeight,
+              dpi: selectedJournal.minDPI,
+              label: 'double'
+            })}>
+              {t('journal.open_template')} • {t('journal.double_col')}
+            </button>
+          </div>
         </section>
       )}
 
