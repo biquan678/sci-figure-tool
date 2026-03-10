@@ -1,23 +1,12 @@
 import { useParams, Link } from 'react-router-dom';
-import { useEffect } from 'react';
 import { posts } from '../data/blog';
 import { articleContent } from '../data/articles';
+import SEO from '../components/SEO';
 
 export default function BlogPost() {
   const { slug } = useParams<{ slug: string }>();
   const post = posts.find(p => p.slug === slug);
   const content = slug ? articleContent[slug] : undefined;
-
-  useEffect(() => {
-    if (post) {
-      document.title = `${post.title} — SCI Pub Tools`;
-      let meta = document.querySelector('meta[name="description"]') as HTMLMetaElement;
-      if (meta) meta.content = post.excerpt;
-    }
-    return () => {
-      document.title = 'SciPubTools — Journal Figure Checker & Converter';
-    };
-  }, [post]);
 
   if (!post || !content) {
     return (
@@ -41,7 +30,12 @@ export default function BlogPost() {
 
   return (
     <article className="max-w-3xl mx-auto px-4 py-8">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
+      <SEO
+        title={`${post.title} | SciPubTools`}
+        description={post.excerpt}
+        canonical={`https://scipubtools.com/blog/${post.slug}`}
+        schema={articleSchema}
+      />
       <Link to="/blog" className="text-sm text-blue-600 hover:underline mb-4 inline-block">← Back</Link>
       <div className="flex flex-wrap gap-1 mb-3">
         {post.tags.map(tag => (

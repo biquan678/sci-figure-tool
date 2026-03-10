@@ -121,7 +121,7 @@ export default function Converter() {
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8 space-y-6">
-      <SEO title="Image Format Converter — TIFF/PNG/JPG/PDF | SCI Pub Tools" description="Free online image converter for scientific publication. Convert between JPG, PNG, TIFF and PDF with proper LZW compression. Compatible with Photoshop, ImageJ, GIMP." />
+      <SEO title="Image Converter — TIFF, PNG, JPG and PDF | SciPubTools" description="Free online image converter for scientific publication. Convert between JPG, PNG, TIFF and PDF with privacy-friendly local processing in the browser." canonical="https://scipubtools.com/image-converter" />
       <div className="text-center mb-6">
         <h1 className="text-2xl font-bold text-gray-900">{t('converter.title')}</h1>
         <p className="text-sm text-gray-500 mt-1">{t('converter.subtitle')}</p>

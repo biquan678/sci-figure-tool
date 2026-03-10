@@ -45,8 +45,9 @@ export default function JournalDynamic(){
   return (
     <div className="max-w-4xl mx-auto px-6 py-12">
       <SEO
-        title={`${journal.name} Figure Requirements`}
-        description={`Figure size, DPI, and format requirements for ${journal.name}.`}
+        title={`${journal.name} Figure Requirements | SciPubTools`}
+        description={`Figure size, DPI, accepted formats and figure preparation notes for ${journal.name}. Check width, resolution and download journal-ready templates.`}
+        canonical={`https://scipubtools.com/journals/${slug}`}
         schema={{
           '@context': 'https://schema.org',
           '@type': 'TechArticle',

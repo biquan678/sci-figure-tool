@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { journals, categories } from '../data/journals';
 import { slugify } from '../utils/slug';
+import SEO from '../components/SEO';
 
 export default function Journals() {
   const { t } = useTranslation();
@@ -21,6 +22,11 @@ export default function Journals() {
 
   return (
     <div className="max-w-5xl mx-auto px-6 py-12">
+      <SEO
+        title="Journal Figure Requirements by Publisher and Journal | SciPubTools"
+        description="Browse journal figure requirements for Nature, Science, Cell, Lancet, Elsevier, ACS, IEEE and many more. Check figure size, DPI, format and color mode."
+        canonical="https://scipubtools.com/journals"
+      />
       <h1 className="text-3xl font-bold">{t('journals.title')}</h1>
       <p className="mt-3 text-gray-600">{t('journals.subtitle')}</p>
 

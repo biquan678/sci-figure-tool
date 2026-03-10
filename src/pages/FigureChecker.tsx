@@ -56,7 +56,7 @@ export default function FigureChecker() {
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-6 space-y-6">
-      <SEO title="Figure Checker — Check Journal Figure Requirements | SCI Pub Tools" description="Free online tool to check if your figures meet journal requirements for DPI, size, format and color mode. Supports 60+ journals including Nature, Science, Cell, Lancet." />
+      <SEO title="Figure Checker — Check Journal Figure Requirements | SciPubTools" description="Free online tool to check if your figures meet journal requirements for DPI, size, format and color mode. Supports major journals including Nature, Science, Cell, Lancet, Elsevier and ACS." canonical="https://scipubtools.com/figure-checker" />
       {/* Step 1 */}
       <section className="bg-white rounded-lg shadow-sm border border-gray-200 p-5">
         <h2 className="text-lg font-semibold text-gray-800 mb-1">
