@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { posts } from '../data/blog';
+import SEO from '../components/SEO';
 
 export default function Home() {
   const { t, i18n } = useTranslation();
@@ -29,8 +30,12 @@ export default function Home() {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-12">
-      {/* JSON-LD structured data */}
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+      <SEO
+        title="SciPubTools — Journal Figure Checker & Converter"
+        description="Free browser-based tools for scientific publication. Check figures against 90+ journal requirements, validate DPI and size, and convert TIFF, PNG, JPG, and PDF locally without upload."
+        canonical="https://scipubtools.com/"
+        schema={faqSchema}
+      />
 
       {/* Hero */}
       <section className="text-center mb-12">
@@ -52,7 +57,16 @@ export default function Home() {
         </Link>
       </div>
 
-      <p className="text-center text-sm text-gray-400 mb-16">🔒 {t('home.privacy')}</p>
+      <p className="text-center text-sm text-gray-400 mb-8">🔒 {t('home.privacy')}</p>
+
+      <section className="max-w-4xl mx-auto mb-16 bg-white rounded-xl border border-gray-200 p-6 sm:p-8">
+        <h2 className="text-2xl font-bold text-gray-900 mb-4">Journal figure requirements, checker and converter in one place</h2>
+        <div className="space-y-3 text-sm leading-7 text-gray-600">
+          <p>SciPubTools is built for researchers who need to prepare publication-ready figures without bouncing between multiple websites, manual checklists and desktop tools.</p>
+          <p>You can validate figure dimensions, DPI, file formats and panel readiness for major journals such as Nature, Science, Cell, Lancet, Elsevier, ACS and IEEE, then convert common formats like TIFF, PNG, JPG and PDF locally in the browser.</p>
+          <p>The goal is simple: save time, reduce journal submission errors and keep figure preparation private by processing files locally whenever possible.</p>
+        </div>
+      </section>
 
       {/* FAQ */}
       <section className="max-w-3xl mx-auto mb-16">
