@@ -44,18 +44,23 @@ function LocaleGate() {
   );
 }
 
+function RootRedirect() {
+  const savedLang = typeof window !== 'undefined' ? localStorage.getItem('lang') : null;
+  const browserLang = typeof navigator !== 'undefined' ? navigator.language.split('-')[0] : DEFAULT_LOCALE;
+  const locale = normalizeLocale(savedLang || (browserLang === 'zh' || browserLang === 'ja' ? browserLang : DEFAULT_LOCALE));
+  return <Navigate to={`/${locale}`} replace />;
+}
+
 function LegacyRedirect() {
   const location = useLocation();
-  const savedLang = typeof window !== 'undefined' ? localStorage.getItem('lang') : null;
-  const locale = normalizeLocale(savedLang || i18n.language || DEFAULT_LOCALE);
-  return <Navigate to={localizePath(stripLocalePrefix(location.pathname), locale)} replace />;
+  return <Navigate to={localizePath(stripLocalePrefix(location.pathname), DEFAULT_LOCALE)} replace />;
 }
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<LegacyRedirect />} />
+        <Route path="/" element={<RootRedirect />} />
         <Route path="/journals" element={<LegacyRedirect />} />
         <Route path="/journals/nature" element={<LegacyRedirect />} />
         <Route path="/journals/cell" element={<LegacyRedirect />} />
