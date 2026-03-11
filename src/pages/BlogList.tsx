@@ -3,16 +3,18 @@ import { useTranslation } from 'react-i18next';
 import { posts } from '../data/blog';
 import SEO from '../components/SEO';
 import { localizePath, normalizeLocale } from '../lib/locale';
+import { getBlogListMeta } from '../lib/blogSeo';
 
 export default function BlogList() {
   const { t, i18n } = useTranslation();
   const { lang } = useParams();
   const locale = normalizeLocale(lang || i18n.language);
   const filteredPosts = posts.filter(p => p.lang === locale || (locale !== 'zh' && locale !== 'ja' && p.lang === 'en'));
+  const meta = getBlogListMeta(locale);
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
-      <SEO title="Blog — Scientific Figure Tips & Guides | SciPubTools" description="Guides, tips and best practices for scientific figure preparation, journal submission, DPI requirements, and image format conversion." path="/blog" locale={locale} />
+      <SEO title={meta.title} description={meta.description} path="/blog" locale={locale} />
       <h1 className="text-2xl font-bold text-gray-900 mb-2">{t('nav.blog')}</h1>
       <p className="text-sm text-gray-500 mb-8">{t('blog.subtitle')}</p>
       <div className="space-y-4">

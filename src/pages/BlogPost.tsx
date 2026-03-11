@@ -3,6 +3,7 @@ import { posts } from '../data/blog';
 import { articleContent } from '../data/articles';
 import SEO from '../components/SEO';
 import { localizePath, normalizeLocale } from '../lib/locale';
+import { getBlogPostMeta } from '../lib/blogSeo';
 
 export default function BlogPost() {
   const { slug, lang } = useParams<{ slug: string; lang: string }>();
@@ -19,6 +20,8 @@ export default function BlogPost() {
     );
   }
 
+  const meta = getBlogPostMeta(post, locale);
+
   const articleSchema = {
     '@context': 'https://schema.org',
     '@type': 'Article',
@@ -34,8 +37,8 @@ export default function BlogPost() {
   return (
     <article className="max-w-3xl mx-auto px-4 py-8">
       <SEO
-        title={`${post.title} | SciPubTools`}
-        description={post.excerpt}
+        title={meta.title}
+        description={meta.description}
         path={`/blog/${post.slug}`}
         locale={locale}
         schema={articleSchema}
