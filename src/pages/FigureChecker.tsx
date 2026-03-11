@@ -1,4 +1,5 @@
 import { useState, useCallback, useMemo } from 'react';
+import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { journals, categories } from '../data/journals';
 import type { JournalRequirement } from '../data/journals';
@@ -6,9 +7,12 @@ import { loadImage, checkImage, convertImage, formatSize } from '../lib/image-ut
 import type { ImageInfo, CheckResult } from '../lib/image-utils';
 import SEO from '../components/SEO';
 import { downloadTemplate } from '../utils/journalTemplate';
+import { normalizeLocale } from '../lib/locale';
 
 export default function FigureChecker() {
   const { t } = useTranslation();
+  const { lang } = useParams();
+  const locale = normalizeLocale(lang);
   const [selectedJournal, setSelectedJournal] = useState<JournalRequirement | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [expandedCat, setExpandedCat] = useState<string | null>(null);
@@ -56,7 +60,7 @@ export default function FigureChecker() {
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-6 space-y-6">
-      <SEO title="Figure Checker — Check Journal Figure Requirements | SciPubTools" description="Free online tool to check if your figures meet journal requirements for DPI, size, format and color mode. Supports major journals including Nature, Science, Cell, Lancet, Elsevier and ACS." canonical="https://scipubtools.com/figure-checker" />
+      <SEO title="Figure Checker — Check Journal Figure Requirements | SciPubTools" description="Free online tool to check if your figures meet journal requirements for DPI, size, format and color mode. Supports major journals including Nature, Science, Cell, Lancet, Elsevier and ACS." path="/figure-checker" locale={locale} />
       {/* Step 1 */}
       <section className="bg-white rounded-lg shadow-sm border border-gray-200 p-5">
         <h2 className="text-lg font-semibold text-gray-800 mb-1">

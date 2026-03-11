@@ -1,9 +1,11 @@
 import { useState, useCallback } from 'react';
+import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import UTIF from 'utif';
 import { jsPDF } from 'jspdf';
 import { formatSize } from '../lib/image-utils';
 import SEO from '../components/SEO';
+import { normalizeLocale } from '../lib/locale';
 
 interface FileInfo {
   file: File;
@@ -17,6 +19,8 @@ interface FileInfo {
 
 export default function Converter() {
   const { t } = useTranslation();
+  const { lang } = useParams();
+  const locale = normalizeLocale(lang);
   const [fileInfo, setFileInfo] = useState<FileInfo | null>(null);
   const [outputFormat, setOutputFormat] = useState<'tiff' | 'png' | 'jpeg' | 'pdf'>('tiff');
   const [quality, setQuality] = useState(95);
@@ -121,7 +125,7 @@ export default function Converter() {
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8 space-y-6">
-      <SEO title="Image Converter — TIFF, PNG, JPG and PDF | SciPubTools" description="Free online image converter for scientific publication. Convert between JPG, PNG, TIFF and PDF with privacy-friendly local processing in the browser." canonical="https://scipubtools.com/image-converter" />
+      <SEO title="Image Converter — TIFF, PNG, JPG and PDF | SciPubTools" description="Free online image converter for scientific publication. Convert between JPG, PNG, TIFF and PDF with privacy-friendly local processing in the browser." path="/image-converter" locale={locale} />
       <div className="text-center mb-6">
         <h1 className="text-2xl font-bold text-gray-900">{t('converter.title')}</h1>
         <p className="text-sm text-gray-500 mt-1">{t('converter.subtitle')}</p>

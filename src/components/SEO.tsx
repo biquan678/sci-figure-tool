@@ -1,10 +1,13 @@
 import { useEffect } from 'react';
+import { buildCanonical, getAlternateLinks, normalizeLocale } from '../lib/locale';
 
 interface SEOProps {
   title: string;
   description?: string;
   canonical?: string;
   schema?: object;
+  locale?: string;
+  path?: string;
 }
 
 function ensureMeta(selector: string, attrs: Record<string, string>) {
@@ -18,9 +21,17 @@ function ensureMeta(selector: string, attrs: Record<string, string>) {
   });
 }
 
-export default function SEO({ title, description, canonical, schema }: SEOProps) {
+function ensureLink(selector: string, attrs: Record<string, string>) {
+  ensureMeta(selector, attrs);
+}
+
+export default function SEO({ title, description, canonical, schema, locale, path }: SEOProps) {
   useEffect(() => {
+    const normalizedLocale = normalizeLocale(locale);
+    const resolvedCanonical = canonical || buildCanonical(path || '/', normalizedLocale);
+
     document.title = title;
+    document.documentElement.lang = normalizedLocale;
 
     if (description) {
       ensureMeta('meta[name="description"]', { name: 'description', content: description });
@@ -28,11 +39,28 @@ export default function SEO({ title, description, canonical, schema }: SEOProps)
     }
 
     ensureMeta('meta[property="og:title"]', { property: 'og:title', content: title });
-
-    if (canonical) {
-      ensureMeta('link[rel="canonical"]', { rel: 'canonical', href: canonical });
-      ensureMeta('meta[property="og:url"]', { property: 'og:url', content: canonical });
+    ensureMeta('meta[property="og:url"]', { property: 'og:url', content: resolvedCanonical });
+    ensureMeta('meta[property="og:locale"]', { property: 'og:locale', content: normalizedLocale });
+    ensureMeta('meta[name="twitter:title"]', { name: 'twitter:title', content: title });
+    if (description) {
+      ensureMeta('meta[name="twitter:description"]', { name: 'twitter:description', content: description });
     }
+
+    ensureLink('link[rel="canonical"]', { rel: 'canonical', href: resolvedCanonical });
+
+    const alternatePath = path || new URL(resolvedCanonical).pathname;
+    for (const alt of getAlternateLinks(alternatePath)) {
+      ensureLink(`link[rel="alternate"][hreflang="${alt.locale}"]`, {
+        rel: 'alternate',
+        hreflang: alt.locale,
+        href: alt.href,
+      });
+    }
+    ensureLink('link[rel="alternate"][hreflang="x-default"]', {
+      rel: 'alternate',
+      hreflang: 'x-default',
+      href: getAlternateLinks(alternatePath).find((item) => item.locale === 'en')!.href,
+    });
 
     if (schema) {
       const id = 'ld-json';
@@ -49,7 +77,7 @@ export default function SEO({ title, description, canonical, schema }: SEOProps)
     return () => {
       document.title = 'SciPubTools — Journal Figure Checker & Converter';
     };
-  }, [title, description, canonical, schema]);
+  }, [title, description, canonical, schema, locale, path]);
 
   return null;
 }

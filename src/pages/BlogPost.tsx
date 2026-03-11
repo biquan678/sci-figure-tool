@@ -2,9 +2,11 @@ import { useParams, Link } from 'react-router-dom';
 import { posts } from '../data/blog';
 import { articleContent } from '../data/articles';
 import SEO from '../components/SEO';
+import { localizePath, normalizeLocale } from '../lib/locale';
 
 export default function BlogPost() {
-  const { slug } = useParams<{ slug: string }>();
+  const { slug, lang } = useParams<{ slug: string; lang: string }>();
+  const locale = normalizeLocale(lang);
   const post = posts.find(p => p.slug === slug);
   const content = slug ? articleContent[slug] : undefined;
 
@@ -12,7 +14,7 @@ export default function BlogPost() {
     return (
       <div className="max-w-3xl mx-auto px-4 py-16 text-center">
         <h1 className="text-2xl font-bold text-gray-900 mb-4">Article Not Found</h1>
-        <Link to="/" className="text-blue-600 hover:underline">← Back to Home</Link>
+        <Link to={localizePath('/', locale)} className="text-blue-600 hover:underline">← Back to Home</Link>
       </div>
     );
   }
@@ -23,9 +25,10 @@ export default function BlogPost() {
     headline: post.title,
     description: post.excerpt,
     datePublished: post.date,
+    inLanguage: locale,
     author: { '@type': 'Organization', name: 'SCI Pub Tools' },
     publisher: { '@type': 'Organization', name: 'SCI Pub Tools', url: 'https://scipubtools.com' },
-    mainEntityOfPage: `https://scipubtools.com/blog/${post.slug}`,
+    mainEntityOfPage: `https://scipubtools.com${localizePath(`/blog/${post.slug}`, locale)}`,
   };
 
   return (
@@ -33,10 +36,11 @@ export default function BlogPost() {
       <SEO
         title={`${post.title} | SciPubTools`}
         description={post.excerpt}
-        canonical={`https://scipubtools.com/blog/${post.slug}`}
+        path={`/blog/${post.slug}`}
+        locale={locale}
         schema={articleSchema}
       />
-      <Link to="/blog" className="text-sm text-blue-600 hover:underline mb-4 inline-block">← Back</Link>
+      <Link to={localizePath('/blog', locale)} className="text-sm text-blue-600 hover:underline mb-4 inline-block">← Back</Link>
       <div className="flex flex-wrap gap-1 mb-3">
         {post.tags.map(tag => (
           <span key={tag} className="text-xs px-2 py-0.5 bg-blue-50 text-blue-600 rounded-full">{tag}</span>

@@ -1,14 +1,16 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { journals } from '../../data/journals';
 import { downloadTemplate, renderTemplate, mmToPx } from '../../utils/journalTemplate';
 import { slugify } from '../../utils/slug';
 import SEO from '../../components/SEO';
+import { localizePath, normalizeLocale } from '../../lib/locale';
 
 export default function JournalDynamic(){
   const { t } = useTranslation();
-  const { slug } = useParams();
+  const { slug, lang } = useParams();
+  const locale = normalizeLocale(lang);
   const journal = useMemo(() => journals.find(j => slugify(j.name) === slug), [slug]);
 
   if (!journal) return <div className="max-w-4xl mx-auto px-6 py-12">Not found.</div>;
@@ -47,14 +49,15 @@ export default function JournalDynamic(){
       <SEO
         title={`${journal.name} Figure Requirements | SciPubTools`}
         description={`Figure size, DPI, accepted formats and figure preparation notes for ${journal.name}. Check width, resolution and download journal-ready templates.`}
-        canonical={`https://scipubtools.com/journals/${slug}`}
+        path={`/journals/${slug}`}
+        locale={locale}
         schema={{
           '@context': 'https://schema.org',
           '@type': 'TechArticle',
           headline: `${journal.name} Figure Requirements`,
           description: `Figure size, DPI, and format requirements for ${journal.name}.`,
           about: 'Scientific figure requirements',
-          inLanguage: 'en',
+          inLanguage: locale,
           publisher: { '@type': 'Organization', name: 'SciPubTools' }
         }}
       />
@@ -99,8 +102,8 @@ export default function JournalDynamic(){
         </div>
 
         <div className="mt-4 flex flex-wrap gap-2 text-sm">
-          <a className="text-blue-600 underline" href="/figure-checker">Go to Figure Checker</a>
-          <a className="text-blue-600 underline" href="/image-converter">Go to Format Converter</a>
+          <Link className="text-blue-600 underline" to={localizePath('/figure-checker', locale)}>Go to Figure Checker</Link>
+          <Link className="text-blue-600 underline" to={localizePath('/image-converter', locale)}>Go to Format Converter</Link>
         </div>
 
         <div className="mt-3 flex flex-wrap gap-2">
