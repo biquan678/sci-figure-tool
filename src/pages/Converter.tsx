@@ -1,8 +1,6 @@
 import { useState, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import UTIF from 'utif';
-import { jsPDF } from 'jspdf';
 import { formatSize } from '../lib/image-utils';
 import SEO from '../components/SEO';
 import { normalizeLocale } from '../lib/locale';
@@ -33,6 +31,7 @@ export default function Converter() {
     const isTiff = file.name.toLowerCase().endsWith('.tiff') || file.name.toLowerCase().endsWith('.tif') || file.type === 'image/tiff';
 
     if (isTiff) {
+      const { default: UTIF } = await import('utif');
       const ifds = UTIF.decode(arrayBuffer);
       UTIF.decodeImage(arrayBuffer, ifds[0]);
       const ifd = ifds[0];
@@ -73,18 +72,18 @@ export default function Converter() {
       const { width, height, imageData } = fileInfo;
 
       if (outputFormat === 'tiff') {
-        // Real TIFF encoding with UTIF
+        const { default: UTIF } = await import('utif');
         const rgba = new Uint8Array(imageData.data.buffer);
         const tiffData = UTIF.encodeImage(rgba, width, height);
         const blob = new Blob([tiffData], { type: 'image/tiff' });
         downloadBlob(blob, 'tiff');
       } else if (outputFormat === 'pdf') {
+        const [{ jsPDF }] = await Promise.all([import('jspdf')]);
         const canvas = document.createElement('canvas');
         canvas.width = width;
         canvas.height = height;
         const ctx = canvas.getContext('2d')!;
         ctx.putImageData(imageData, 0, 0);
-        // Convert px to mm at target DPI
         const wMM = (width / dpi) * 25.4;
         const hMM = (height / dpi) * 25.4;
         const pdf = new jsPDF({ orientation: wMM > hMM ? 'landscape' : 'portrait', unit: 'mm', format: [wMM, hMM] });
@@ -107,7 +106,7 @@ export default function Converter() {
         }, mimeType, q);
         return;
       }
-    } catch (e) {
+    } catch {
       alert(t('converter.conversion_failed'));
     }
     setConverting(false);
@@ -131,7 +130,6 @@ export default function Converter() {
         <p className="text-sm text-gray-500 mt-1">{t('converter.subtitle')}</p>
       </div>
 
-      {/* Upload */}
       <section className="bg-white rounded-lg shadow-sm border border-gray-200 p-5">
         <h2 className="text-lg font-semibold text-gray-800 mb-3">📤 {t('converter.upload')}</h2>
         <div onDrop={e => { e.preventDefault(); setDragOver(false); const f = e.dataTransfer.files[0]; if (f) loadFile(f); }}
@@ -153,7 +151,6 @@ export default function Converter() {
         </div>
       </section>
 
-      {/* Convert options */}
       {fileInfo && (
         <section className="bg-white rounded-lg shadow-sm border border-gray-200 p-5">
           <h2 className="text-lg font-semibold text-gray-800 mb-4">⚙️ {t('converter.output_format')}</h2>
