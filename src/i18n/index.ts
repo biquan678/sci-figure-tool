@@ -24,7 +24,7 @@ const resources = {
         intro_p2: 'You can validate figure dimensions, DPI, file formats and panel readiness for major journals such as Nature, Science, Cell, Lancet, Elsevier, ACS and IEEE, then convert common formats like TIFF, PNG, JPG and PDF locally in the browser.',
         intro_p3: 'The goal is simple: save time, reduce journal submission errors and keep figure preparation private by processing files locally whenever possible.',
       },
-      blog: { subtitle: 'Guides, tips and best practices for scientific figure preparation and journal submission.' },
+      blog: { subtitle: 'Guides, tips and best practices for scientific figure preparation and journal submission.', not_found: 'Article Not Found', back_home: 'Back to Home', back_blog: 'Back' },
       faq: {
         title: 'Frequently Asked Questions',
         q1: 'Is this tool really free?', a1: 'Yes, completely free. No registration, no hidden fees, no watermarks. All tools are open to everyone.',
@@ -120,7 +120,7 @@ const resources = {
         privacy: '所有处理在浏览器本地完成，图片不会离开你的设备。', latest_articles: '最新文章',
         intro_title: '期刊图片要求、检查与转换，一站式完成', intro_p1: 'SciPubTools 面向需要高效准备投稿图片的研究者，减少在多个网站、人工清单和桌面软件之间来回切换。', intro_p2: '你可以检查 Nature、Science、Cell、Lancet、Elsevier、ACS、IEEE 等主流期刊的尺寸、DPI、格式和面板准备情况，并在浏览器本地完成 TIFF、PNG、JPG、PDF 的转换。', intro_p3: '目标很简单：节省时间、减少因图片规范问题带来的投稿错误，并尽可能通过本地处理保护科研数据隐私。',
       },
-      blog: { subtitle: '科研图片准备和期刊投稿的指南、技巧和最佳实践。' },
+      blog: { subtitle: '科研图片准备和期刊投稿的指南、技巧和最佳实践。', not_found: '未找到文章', back_home: '返回首页', back_blog: '返回博客' },
       faq: {
         title: '常见问题', q1: '这个工具真的免费吗？', a1: '是的，完全免费。无需注册，没有隐藏费用，没有水印。所有工具对所有人开放。', q2: '我的图片会上传到服务器吗？', a2: '不会。所有图片处理完全在你的浏览器中通过 JavaScript 完成。图片永远不会离开你的设备。我们无法访问你的任何数据。', q3: '支持哪些图片格式？', a3: '检查支持：JPG、PNG、TIFF、SVG、BMP、WebP。转换支持：JPG、PNG、TIFF（LZW压缩）和 PDF。TIFF 输出兼容 Photoshop、ImageJ、GIMP 等专业软件。', q4: '支持多少个期刊？', a4: '目前支持 60+ 个期刊，包括 Nature、Science、Cell、Lancet、NEJM、JAMA，以及 Cell Research、Science Bulletin 等国内主要 SCI 期刊。我们会持续添加更多。', q5: '可以将 JPG/PNG 转换为 TIFF 用于投稿吗？', a5: '可以。我们的转换器生成真实的 TIFF 文件（LZW压缩），被所有主要期刊接受。输出文件可以在 Photoshop、ImageJ、GIMP 中正常打开。', q6: '图片应该用多少 DPI？', a6: '大多数期刊要求照片最低 300 DPI，线条图（图表、示意图）600 DPI。使用我们的图片检查工具可以查看具体期刊的要求。',
       },
@@ -145,7 +145,7 @@ const resources = {
       site: { title: 'SCI Pub Tools', subtitle: '科学論文投稿のための無料オンラインツール', journals_count: '{{count}}誌対応' },
       nav: { home: 'ホーム', journals: 'ジャーナル規定', checker: '図チェッカー', converter: 'フォーマット変換', blog: 'ブログ' },
       home: { hero: '科学論文投稿のための無料ツール', hero_sub: '図の要件チェック、画像フォーマット変換、投稿用図の準備 — すべてブラウザ上で完結。', checker_title: '図フォーマットチェッカー', checker_desc: 'DPI、サイズ、フォーマット、カラーモードがジャーナルの要件を満たしているか確認。', converter_title: 'フォーマット変換', converter_desc: 'JPG、PNG、TIFF、PDF間の変換。あらゆるソフトウェアで開ける本物の変換。', privacy: 'すべての処理はブラウザ上で行われます。画像がデバイスから離れることはありません。', latest_articles: '最新記事', intro_title: 'ジャーナル図要件の確認、チェック、変換を一か所で', intro_p1: 'SciPubTools は、複数のサイト、手動チェックリスト、デスクトップツールを行き来せずに投稿用図を準備したい研究者のために作られています。', intro_p2: 'Nature、Science、Cell、Lancet、Elsevier、ACS、IEEE など主要ジャーナル向けに、図の寸法、DPI、形式、パネル準備状況を確認し、TIFF、PNG、JPG、PDF をブラウザ上でローカル変換できます。', intro_p3: '目的はシンプルです。時間を節約し、図の規定違反による投稿エラーを減らし、可能な限りローカル処理でプライバシーを守ることです。' },
-      blog: { subtitle: '科学論文の図の準備とジャーナル投稿のガイド、ヒント、ベストプラクティス。' },
+      blog: { subtitle: '科学論文の図の準備とジャーナル投稿のガイド、ヒント、ベストプラクティス。', not_found: '記事が見つかりません', back_home: 'ホームに戻る', back_blog: 'ブログへ戻る' },
       faq: { title: 'よくある質問', q1: 'このツールは本当に無料ですか？', a1: 'はい、完全に無料です。登録不要、隠れた費用なし、透かしなし。', q2: '画像はサーバーにアップロードされますか？', a2: 'いいえ。すべての画像処理はブラウザ上のJavaScriptで行われます。画像がデバイスから離れることはありません。', q3: 'どの画像フォーマットに対応していますか？', a3: 'チェック：JPG、PNG、TIFF、SVG、BMP、WebP。変換：JPG、PNG、TIFF（LZW圧縮）、PDF。TIFF出力はPhotoshop、ImageJ、GIMPと互換性があります。', q4: '何誌に対応していますか？', a4: 'Nature、Science、Cell、Lancetなど60誌以上に対応。定期的に追加しています。', q5: 'JPG/PNGをTIFFに変換して投稿できますか？', a5: 'はい。LZW圧縮の本物のTIFFファイルを生成します。主要なジャーナルすべてで受け入れられます。', q6: '図のDPIはいくつにすべきですか？', a6: 'ほとんどのジャーナルは写真に300 DPI以上、線画に600 DPIを要求します。図チェッカーで具体的な要件を確認できます。' },
       checker: { title: '論文図フォーマットチェッカー', step1: '対象ジャーナルを選択', step1_hint: '図の要件をお知らせします', step2: '図をアップロード', step2_hint_ready: 'アップロードして{{name}}の要件をチェック', step2_hint_wait: '先にジャーナルを選択してください', step3: 'チェック結果', all_pass: '🎉 すべて合格！', pass_count: '{{pass}}/{{total}} 合格', step4: '変換＆ダウンロード', step4_hint: 'サイズとDPIを自動調整', search_placeholder: 'ジャーナル名を検索...', upload_text: 'ここに画像をドラッグ＆ドロップ、またはクリック', upload_formats: 'PNG / JPEG / TIFF / SVG対応', select_first: '先にジャーナルを選択してください', no_results: '結果が見つかりません', single_col: 'シングルカラム', double_col: 'ダブルカラム', convert_download: '変換＆ダウンロード', converting: '変換中...', selected: '選択済み', clear: 'クリア', back: 'カテゴリに戻る', format: 'フォーマット', dpi: 'DPI', color: 'カラー', size: 'サイズ', single_w: '単カラム幅', double_w: '双カラム幅', font: 'フォント', min_font: '最小フォントサイズ', privacy: '🔒 すべての処理はブラウザ上で行われます。' },
       converter: { title: '画像フォーマット変換', subtitle: 'JPG、PNG、TIFF、PDF間の変換 — すべてのソフトウェアで開ける本物の変換', upload: '画像をアップロード', upload_hint: 'ドラッグ＆ドロップまたはクリック。', output_format: '出力フォーマット', quality: '品質', dpi: 'DPI設定', convert: '変換＆ダウンロード', converting: '変換中...', conversion_failed: '変換に失敗しました', info: '画像情報', width: '幅', height: '高さ', format: 'フォーマット', file_size: 'ファイルサイズ', privacy: '🔒 すべての変換はブラウザ上で行われます。', tiff_note: 'TIFFファイルはLZW圧縮で生成され、Photoshop、ImageJ、GIMPなどと互換性があります。' },

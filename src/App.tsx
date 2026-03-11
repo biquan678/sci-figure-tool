@@ -1,23 +1,24 @@
 import { BrowserRouter, Navigate, Outlet, Route, Routes, useLocation, useParams } from 'react-router-dom';
-import { useEffect } from 'react';
-import Journals from './pages/Journals';
-import JournalNature from './pages/journals/nature';
-import JournalCell from './pages/journals/cell';
-import JournalScience from './pages/journals/science';
-import JournalElsevier from './pages/journals/elsevier';
-import JournalAcs from './pages/journals/acs';
-import JournalDynamic from './pages/journals/_dynamic';
+import { lazy, Suspense, useEffect } from 'react';
 import './i18n';
 import i18n from './i18n';
 import Layout from './components/Layout';
-import Home from './pages/Home';
-import FigureChecker from './pages/FigureChecker';
-import Converter from './pages/Converter';
-import BlogList from './pages/BlogList';
-import BlogPost from './pages/BlogPost';
-import Privacy from './pages/Privacy';
-import Terms from './pages/Terms';
 import { DEFAULT_LOCALE, SUPPORTED_LOCALES, localizePath, normalizeLocale, stripLocalePrefix } from './lib/locale';
+
+const Home = lazy(() => import('./pages/Home'));
+const Journals = lazy(() => import('./pages/Journals'));
+const JournalNature = lazy(() => import('./pages/journals/nature'));
+const JournalCell = lazy(() => import('./pages/journals/cell'));
+const JournalScience = lazy(() => import('./pages/journals/science'));
+const JournalElsevier = lazy(() => import('./pages/journals/elsevier'));
+const JournalAcs = lazy(() => import('./pages/journals/acs'));
+const JournalDynamic = lazy(() => import('./pages/journals/_dynamic'));
+const FigureChecker = lazy(() => import('./pages/FigureChecker'));
+const Converter = lazy(() => import('./pages/Converter'));
+const BlogList = lazy(() => import('./pages/BlogList'));
+const BlogPost = lazy(() => import('./pages/BlogPost'));
+const Privacy = lazy(() => import('./pages/Privacy'));
+const Terms = lazy(() => import('./pages/Terms'));
 
 function LocaleGate() {
   const { lang } = useParams();
@@ -36,7 +37,9 @@ function LocaleGate() {
 
   return (
     <Layout>
-      <Outlet />
+      <Suspense fallback={<div className="max-w-6xl mx-auto px-4 py-10 text-sm text-gray-400">Loading…</div>}>
+        <Outlet />
+      </Suspense>
     </Layout>
   );
 }

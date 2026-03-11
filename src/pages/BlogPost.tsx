@@ -1,4 +1,5 @@
 import { useParams, Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { posts } from '../data/blog';
 import { articleContent } from '../data/articles';
 import SEO from '../components/SEO';
@@ -6,6 +7,7 @@ import { localizePath, normalizeLocale } from '../lib/locale';
 import { getBlogPostMeta } from '../lib/blogSeo';
 
 export default function BlogPost() {
+  const { t } = useTranslation();
   const { slug, lang } = useParams<{ slug: string; lang: string }>();
   const locale = normalizeLocale(lang);
   const post = posts.find(p => p.slug === slug);
@@ -14,8 +16,8 @@ export default function BlogPost() {
   if (!post || !content) {
     return (
       <div className="max-w-3xl mx-auto px-4 py-16 text-center">
-        <h1 className="text-2xl font-bold text-gray-900 mb-4">Article Not Found</h1>
-        <Link to={localizePath('/', locale)} className="text-blue-600 hover:underline">← Back to Home</Link>
+        <h1 className="text-2xl font-bold text-gray-900 mb-4">{t('blog.not_found')}</h1>
+        <Link to={localizePath('/', locale)} className="text-blue-600 hover:underline">← {t('blog.back_home')}</Link>
       </div>
     );
   }
@@ -43,7 +45,7 @@ export default function BlogPost() {
         locale={locale}
         schema={articleSchema}
       />
-      <Link to={localizePath('/blog', locale)} className="text-sm text-blue-600 hover:underline mb-4 inline-block">← Back</Link>
+      <Link to={localizePath('/blog', locale)} className="text-sm text-blue-600 hover:underline mb-4 inline-block">← {t('blog.back_blog')}</Link>
       <div className="flex flex-wrap gap-1 mb-3">
         {post.tags.map(tag => (
           <span key={tag} className="text-xs px-2 py-0.5 bg-blue-50 text-blue-600 rounded-full">{tag}</span>
