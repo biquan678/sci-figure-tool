@@ -1,74 +1,72 @@
+import { useTranslation } from 'react-i18next';
+import { useParams } from 'react-router-dom';
 import SEO from '../components/SEO';
+import { normalizeLocale } from '../lib/locale';
 
 export default function Terms() {
+  const { t } = useTranslation();
+  const { lang } = useParams();
+  const locale = normalizeLocale(lang);
+
   return (
     <div className="max-w-3xl mx-auto px-4 py-8">
-      <SEO title="Terms of Service — SCI Pub Tools" description="Terms of service for SCI Pub Tools. Free online tools for scientific figure checking and image format conversion." />
-      <h1 className="text-2xl font-bold text-gray-900 mb-6">Terms of Service</h1>
-      <p className="text-sm text-gray-400 mb-8">Last updated: March 1, 2026</p>
+      <SEO title={t('terms.seo_title')} description={t('terms.seo_desc')} path="/terms" locale={locale} />
+      <h1 className="text-2xl font-bold text-gray-900 mb-6">{t('legal.terms_title')}</h1>
+      <p className="text-sm text-gray-400 mb-8">{t('legal.last_updated')}</p>
 
       <div className="space-y-6 text-sm text-gray-700 leading-relaxed">
         <section>
-          <h2 className="text-lg font-semibold text-gray-900 mb-2">1. Acceptance of Terms</h2>
-          <p>By accessing and using SCI Pub Tools (scipubtools.com), you agree to be bound by these Terms of Service. If you do not agree, please do not use our services.</p>
+          <h2 className="text-lg font-semibold text-gray-900 mb-2">{t('terms.s1t')}</h2>
+          <p>{t('terms.s1p')}</p>
         </section>
-
         <section>
-          <h2 className="text-lg font-semibold text-gray-900 mb-2">2. Description of Service</h2>
-          <p>SCI Pub Tools provides free, browser-based tools for scientific publication, including:</p>
+          <h2 className="text-lg font-semibold text-gray-900 mb-2">{t('terms.s2t')}</h2>
+          <p>{t('terms.s2p1')}</p>
           <ul className="list-disc ml-5 mt-2 space-y-1">
-            <li>Figure format checker — verify images against journal requirements</li>
-            <li>Image format converter — convert between JPG, PNG, TIFF, and PDF</li>
-            <li>Blog articles — guides and tips for scientific figure preparation</li>
+            <li>{t('terms.service1')}</li>
+            <li>{t('terms.service2')}</li>
+            <li>{t('terms.service3')}</li>
           </ul>
-          <p className="mt-2">All image processing is performed locally in your browser. No images are uploaded to our servers.</p>
+          <p className="mt-2">{t('terms.s2p2')}</p>
         </section>
-
         <section>
-          <h2 className="text-lg font-semibold text-gray-900 mb-2">3. Free Use</h2>
-          <p>Our tools are provided free of charge. No registration or account is required. We reserve the right to modify, suspend, or discontinue any part of the service at any time without notice.</p>
+          <h2 className="text-lg font-semibold text-gray-900 mb-2">{t('terms.s3t')}</h2>
+          <p>{t('terms.s3p')}</p>
         </section>
-
         <section>
-          <h2 className="text-lg font-semibold text-gray-900 mb-2">4. Disclaimer of Warranties</h2>
-          <p>Our tools are provided "as is" and "as available" without warranties of any kind, either express or implied. While we strive for accuracy, we do not guarantee that:</p>
+          <h2 className="text-lg font-semibold text-gray-900 mb-2">{t('terms.s4t')}</h2>
+          <p>{t('terms.s4p1')}</p>
           <ul className="list-disc ml-5 mt-2 space-y-1">
-            <li>Journal requirements in our database are always up-to-date</li>
-            <li>Converted images will be accepted by all journals</li>
-            <li>The service will be uninterrupted or error-free</li>
+            <li>{t('terms.warr1')}</li>
+            <li>{t('terms.warr2')}</li>
+            <li>{t('terms.warr3')}</li>
           </ul>
-          <p className="mt-2">Always verify your figures against the latest journal guidelines before submission.</p>
+          <p className="mt-2">{t('terms.s4p2')}</p>
         </section>
-
         <section>
-          <h2 className="text-lg font-semibold text-gray-900 mb-2">5. Limitation of Liability</h2>
-          <p>SCI Pub Tools shall not be liable for any direct, indirect, incidental, special, or consequential damages resulting from the use or inability to use our services, including but not limited to manuscript rejection due to figure formatting issues.</p>
+          <h2 className="text-lg font-semibold text-gray-900 mb-2">{t('terms.s5t')}</h2>
+          <p>{t('terms.s5p')}</p>
         </section>
-
         <section>
-          <h2 className="text-lg font-semibold text-gray-900 mb-2">6. Intellectual Property</h2>
-          <p>The content, design, and code of SCI Pub Tools are protected by copyright. You may use our tools freely for personal and commercial purposes. You may not copy, modify, or redistribute our website code without permission.</p>
-          <p className="mt-2">Images you process using our tools remain entirely your property. We claim no rights over your content.</p>
+          <h2 className="text-lg font-semibold text-gray-900 mb-2">{t('terms.s6t')}</h2>
+          <p>{t('terms.s6p1')}</p>
+          <p className="mt-2">{t('terms.s6p2')}</p>
         </section>
-
         <section>
-          <h2 className="text-lg font-semibold text-gray-900 mb-2">7. Third-Party Services</h2>
-          <p>Our website may contain links to third-party websites and uses third-party services (Google Analytics, Google AdSense). We are not responsible for the content or practices of these third parties. Your use of third-party services is governed by their respective terms and privacy policies.</p>
+          <h2 className="text-lg font-semibold text-gray-900 mb-2">{t('terms.s7t')}</h2>
+          <p>{t('terms.s7p')}</p>
         </section>
-
         <section>
-          <h2 className="text-lg font-semibold text-gray-900 mb-2">8. Advertising</h2>
-          <p>We display advertisements through Google AdSense to support the free operation of our tools. Ad content is determined by Google and may be personalized based on your browsing history. You can manage ad personalization through your Google account settings.</p>
+          <h2 className="text-lg font-semibold text-gray-900 mb-2">{t('terms.s8t')}</h2>
+          <p>{t('terms.s8p')}</p>
         </section>
-
         <section>
-          <h2 className="text-lg font-semibold text-gray-900 mb-2">9. Changes to Terms</h2>
-          <p>We reserve the right to update these Terms of Service at any time. Continued use of the service after changes constitutes acceptance of the new terms.</p>
+          <h2 className="text-lg font-semibold text-gray-900 mb-2">{t('terms.s9t')}</h2>
+          <p>{t('terms.s9p')}</p>
         </section>
-
         <section>
-          <h2 className="text-lg font-semibold text-gray-900 mb-2">10. Contact</h2>
-          <p>For questions about these Terms, contact us at: <span className="text-blue-600">contact@scipubtools.com</span></p>
+          <h2 className="text-lg font-semibold text-gray-900 mb-2">{t('terms.s10t')}</h2>
+          <p>{t('terms.s10p')} <span className="text-blue-600">contact@scipubtools.com</span></p>
         </section>
       </div>
     </div>

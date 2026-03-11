@@ -108,7 +108,7 @@ export default function Converter() {
         return;
       }
     } catch (e) {
-      alert('Conversion failed');
+      alert(t('converter.conversion_failed'));
     }
     setConverting(false);
   };

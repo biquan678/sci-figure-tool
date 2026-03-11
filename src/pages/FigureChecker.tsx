@@ -90,7 +90,7 @@ export default function FigureChecker() {
                   </button>
                 ))}
               </div>
-            ) : <p className="text-sm text-gray-400 text-center py-4">No results found</p>}
+            ) : <p className="text-sm text-gray-400 text-center py-4">{t('checker.no_results')}</p>}
           </div>
         )}
 

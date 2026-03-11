@@ -1,0 +1,21 @@
+{
+  "name": "SciPubTools",
+  "short_name": "SciPubTools",
+  "description": "Journal figure checker and scientific image converter for publication.",
+  "start_url": "/en",
+  "display": "standalone",
+  "background_color": "#f9fafb",
+  "theme_color": "#2563eb",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "32x32 48x48",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

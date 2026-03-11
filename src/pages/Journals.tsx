@@ -37,7 +37,7 @@ export default function Journals() {
       <div className="mt-6 flex flex-wrap gap-3 items-center">
         <input value={query} onChange={e => setQuery(e.target.value)} placeholder={t('checker.search_placeholder')} className="px-3 py-2 border rounded-lg text-sm" />
         <select value={cat} onChange={e => setCat(e.target.value)} className="px-3 py-2 border rounded-lg text-sm">
-          <option value="">All categories</option>
+          <option value="">{t('journals.all_categories')}</option>
           {categories.map(c => <option key={c} value={c}>{t(`categories.${c}`)}</option>)}
         </select>
         {cat && <button className="text-sm text-blue-600" onClick={() => setCat('')}>Clear</button>}

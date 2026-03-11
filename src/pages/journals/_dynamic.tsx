@@ -79,12 +79,12 @@ export default function JournalDynamic(){
 
         <div className="mt-4 bg-white border rounded-lg p-3">
           <div className="flex items-center justify-between">
-            <div className="text-xs text-gray-500">Preview</div>
+            <div className="text-xs text-gray-500">{t('journal.preview')}</div>
             <div className="flex gap-2 text-xs">
               {[0.6, 1, 1.5, 2].map(z => (
                 <button key={z} className={zoom === z ? 'px-2 py-1 rounded bg-blue-600 text-white' : 'px-2 py-1 rounded bg-gray-100'} onClick={() => setZoom(z)}>{Math.round(z*100)}%</button>
               ))}
-              <button className="px-2 py-1 rounded bg-gray-900 text-white" onClick={() => setOpen(true)}>放大预览</button>
+              <button className="px-2 py-1 rounded bg-gray-900 text-white" onClick={() => setOpen(true)}>{t('journal.enlarge_preview')}</button>
             </div>
           </div>
           <div className="mt-2 overflow-auto rounded-lg bg-gray-50 p-2">
@@ -95,15 +95,15 @@ export default function JournalDynamic(){
         </div>
 
         <div className="mt-3 text-sm text-gray-700 grid grid-cols-2 gap-2">
-          <div><b>Width:</b> {widthMm} mm ({pxW}px)</div>
-          <div><b>Height:</b> {height} mm ({pxH}px)</div>
-          <div><b>DPI:</b> {dpi}</div>
-          <div><b>Mode:</b> {mode}</div>
+          <div><b>{t('journal.width')}:</b> {widthMm} mm ({pxW}px)</div>
+          <div><b>{t('journal.height')}:</b> {height} mm ({pxH}px)</div>
+          <div><b>{t('journal.dpi')}:</b> {dpi}</div>
+          <div><b>{t('journal.mode')}:</b> {mode}</div>
         </div>
 
         <div className="mt-4 flex flex-wrap gap-2 text-sm">
-          <Link className="text-blue-600 underline" to={localizePath('/figure-checker', locale)}>Go to Figure Checker</Link>
-          <Link className="text-blue-600 underline" to={localizePath('/image-converter', locale)}>Go to Format Converter</Link>
+          <Link className="text-blue-600 underline" to={localizePath('/figure-checker', locale)}>{t('journal.go_checker')}</Link>
+          <Link className="text-blue-600 underline" to={localizePath('/image-converter', locale)}>{t('journal.go_converter')}</Link>
         </div>
 
         <div className="mt-3 flex flex-wrap gap-2">
@@ -117,7 +117,7 @@ export default function JournalDynamic(){
           <div className="bg-white rounded-xl p-4 max-w-4xl w-[90vw]">
             <div className="flex justify-between items-center mb-2">
               <div className="font-semibold">{t('journal.template_title')} · {mode}</div>
-              <button className="text-sm px-2 py-1 rounded bg-gray-100" onClick={() => setOpen(false)}>关闭</button>
+              <button className="text-sm px-2 py-1 rounded bg-gray-100" onClick={() => setOpen(false)}>{t('journal.close')}</button>
             </div>
             <div className="overflow-auto max-h-[70vh] bg-gray-50 p-2 rounded">
               <canvas ref={modalRef} style={{ width: '100%', height: 'auto' }} />
