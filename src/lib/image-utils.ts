@@ -11,7 +11,7 @@ export interface ImageInfo {
 
 export interface CheckResult {
   pass: boolean;
-  label: string;
+  labelKey: 'dpi' | 'file_size' | 'image_width' | 'file_format';
   current: string;
   required: string;
   severity: 'ok' | 'warn' | 'error';
@@ -33,10 +33,10 @@ export function loadImage(file: File): Promise<ImageInfo> {
           dataUrl,
         });
       };
-      img.onerror = () => reject(new Error('图片加载失败'));
+      img.onerror = () => reject(new Error('IMAGE_LOAD_FAILED'));
       img.src = dataUrl;
     };
-    reader.onerror = () => reject(new Error('文件读取失败'));
+    reader.onerror = () => reject(new Error('FILE_READ_FAILED'));
     reader.readAsDataURL(file);
   });
 }
@@ -48,8 +48,8 @@ export function checkImage(info: ImageInfo, journal: JournalRequirement): CheckR
   const estimatedDPI = Math.round(info.width / widthInch);
   results.push({
     pass: estimatedDPI >= journal.minDPI,
-    label: '分辨率 (DPI)',
-    current: `约 ${estimatedDPI} DPI（按双栏宽度估算）`,
+    labelKey: 'dpi',
+    current: `~ ${estimatedDPI} DPI`,
     required: `≥ ${journal.minDPI} DPI`,
     severity: estimatedDPI >= journal.minDPI ? 'ok' : estimatedDPI >= 200 ? 'warn' : 'error',
   });
@@ -57,7 +57,7 @@ export function checkImage(info: ImageInfo, journal: JournalRequirement): CheckR
   const maxBytes = parseMaxSize(journal.maxFileSize);
   results.push({
     pass: info.sizeBytes <= maxBytes,
-    label: '文件大小',
+    labelKey: 'file_size',
     current: formatSize(info.sizeBytes),
     required: `≤ ${journal.maxFileSize}`,
     severity: info.sizeBytes <= maxBytes ? 'ok' : 'error',
@@ -66,20 +66,20 @@ export function checkImage(info: ImageInfo, journal: JournalRequirement): CheckR
   const minPixelWidth = Math.round((journal.singleColumnWidth / 25.4) * journal.minDPI);
   results.push({
     pass: info.width >= minPixelWidth,
-    label: '图片宽度',
+    labelKey: 'image_width',
     current: `${info.width} px`,
-    required: `≥ ${minPixelWidth} px（单栏 ${journal.singleColumnWidth}mm @ ${journal.minDPI}DPI）`,
+    required: `≥ ${minPixelWidth} px`,
     severity: info.width >= minPixelWidth ? 'ok' : 'warn',
   });
 
   const formatMap: Record<string, string[]> = {
-    'PNG': ['PNG'], 'JPEG': ['JPEG','JPG'], 'TIFF': ['TIFF','TIF'], 'SVG+XML': ['SVG'], 'PDF': ['PDF'],
+    PNG: ['PNG'], JPEG: ['JPEG', 'JPG'], TIFF: ['TIFF', 'TIF'], 'SVG+XML': ['SVG'], PDF: ['PDF'],
   };
   const currentFormats = formatMap[info.format] || [info.format];
   const formatOk = journal.format.some(f => currentFormats.includes(f));
   results.push({
     pass: formatOk,
-    label: '文件格式',
+    labelKey: 'file_format',
     current: info.format,
     required: journal.format.join(' / '),
     severity: formatOk ? 'ok' : 'warn',
@@ -104,7 +104,7 @@ export function convertImage(
     canvas.width = targetWidthPx;
     canvas.height = targetHeightPx;
     const ctx = canvas.getContext('2d');
-    if (!ctx) return reject(new Error('Canvas 不可用'));
+    if (!ctx) return reject(new Error('CANVAS_UNAVAILABLE'));
 
     ctx.imageSmoothingEnabled = true;
     ctx.imageSmoothingQuality = 'high';
@@ -114,12 +114,12 @@ export function convertImage(
       ctx.drawImage(img, 0, 0, targetWidthPx, targetHeightPx);
       const mimeType = options.outputFormat === 'jpeg' ? 'image/jpeg' : 'image/png';
       canvas.toBlob(
-        (blob) => { if (blob) resolve(blob); else reject(new Error('转换失败')); },
+        (blob) => { if (blob) resolve(blob); else reject(new Error('CONVERT_FAILED')); },
         mimeType,
         options.quality
       );
     };
-    img.onerror = () => reject(new Error('图片加载失败'));
+    img.onerror = () => reject(new Error('IMAGE_LOAD_FAILED'));
     img.src = info.dataUrl;
   });
 }

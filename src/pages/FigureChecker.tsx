@@ -229,7 +229,7 @@ export default function FigureChecker() {
               <div key={i} className={`flex flex-col sm:flex-row sm:items-center justify-between p-3 rounded-md text-sm gap-1 ${r.severity === 'ok' ? 'bg-green-50' : r.severity === 'warn' ? 'bg-yellow-50' : 'bg-red-50'}`}>
                 <div className="flex items-center gap-2">
                   <span>{r.severity === 'ok' ? '✅' : r.severity === 'warn' ? '⚠️' : '❌'}</span>
-                  <span className="font-medium">{r.label}</span>
+                  <span className="font-medium">{t(`checker.result_${r.labelKey}`)}</span>
                 </div>
                 <div className="text-right text-gray-600 text-xs sm:text-sm">{r.current} <span className="text-gray-400 mx-1">→</span> {r.required}</div>
               </div>
